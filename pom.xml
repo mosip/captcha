@@ -14,11 +14,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.mosip.captcha</groupId>
     <artifactId>captcha-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.9.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>captcha</name>
-    <description>Parent project of MOSIP e-Signet</description>
-    <url>https://github.com/mosip/esignet</url>
+    <description>Parent project of MOSIP captcha service</description>
+    <url>https://github.com/mosip/captcha</url>
 
     <licenses>
         <license>
@@ -28,9 +28,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/mosip/esignet.git</connection>
-        <developerConnection>scm:git:ssh://github.com:mosip/esignet.git</developerConnection>
-        <url>https://github.com/mosip/esignet</url>
+        <connection>scm:git:git://github.com/mosip/captcha.git</connection>
+        <developerConnection>scm:git:ssh://github.com:mosip/captcha.git</developerConnection>
+        <url>https://github.com/mosip/captcha</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -39,7 +39,7 @@
             <name>Mosip</name>
             <email>mosip.emailnotifier@gmail.com</email>
             <organization>io.mosip</organization>
-            <organizationUrl>https://github.com/mosip/esignet</organizationUrl>
+            <organizationUrl>https://github.com/mosip/captcha</organizationUrl>
         </developer>
     </developers>
 

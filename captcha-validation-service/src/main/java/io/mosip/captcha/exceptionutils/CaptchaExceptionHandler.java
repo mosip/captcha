@@ -21,7 +21,7 @@ public class CaptchaExceptionHandler {
 	@Autowired
 	protected Environment env;
 
-	@Value("${mosip.esignet.captcha.id.validate}")
+	@Value("${mosip.captcha.id.validate}")
 	public String mosipcaptchaValidateId;
 
 	@Value("${version}")

@@ -33,13 +33,13 @@ public class CaptchaServiceImplTest {
 	@InjectMocks
 	private CaptchaServiceImpl captchaServiceImpl;
 
-	@Value("${mosip.esignet.captcha.secretkey}")
+	@Value("${mosip.captcha.secretkey}")
 	public String recaptchaSecret;
 
-	@Value("${mosip.esignet.captcha.recaptcha.verify.url}")
+	@Value("${mosip.captcha.recaptcha.verify.url}")
 	public String recaptchaVerifyUrl;
 
-	@Value("${mosip.esignet.captcha.id.validate}")
+	@Value("${mosip.captcha.id.validate}")
 	public String mosipcaptchaValidateId;
 
 	@Value("${version}")
