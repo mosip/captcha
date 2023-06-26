@@ -3,6 +3,7 @@ package io.mosip.captcha.exceptionutils;
 import java.util.ArrayList;
 import java.util.Date;
 
+import io.mosip.captcha.constants.CaptchaErrorCode;
 import io.mosip.captcha.exception.CaptchaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,7 @@ public class CaptchaExceptionHandler {
 	@Value("${mosip.captcha.id.validate}")
 	public String mosipcaptchaValidateId;
 
-	@Value("${version}")
+	@Value("${mosip.captcha.validate.api.version}")
 	private String version;
 
 	private static String dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
@@ -69,7 +70,7 @@ public class CaptchaExceptionHandler {
 		response.setResponsetime(getCurrentResponseTime());
 		response.setResponse(null);
 		ArrayList<ExceptionJSONInfoDTO> errors = new ArrayList<ExceptionJSONInfoDTO>();
-		ExceptionJSONInfoDTO errorDetails = new ExceptionJSONInfoDTO("",ex.getMessage());
+		ExceptionJSONInfoDTO errorDetails = new ExceptionJSONInfoDTO(CaptchaErrorCode.CAPTCHA_VALIDATION_FAILED.getErrorCode(), ex.getMessage());
 		errors.add(errorDetails);
 		response.setErrors(errors);
 		return response;

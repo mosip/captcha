@@ -42,7 +42,7 @@ public class CaptchaServiceImplTest {
 	@Value("${mosip.captcha.id.validate}")
 	public String mosipcaptchaValidateId;
 
-	@Value("${version}")
+	@Value("${mosip.captcha.validate.api.version}")
 	private String version;
 
 	@Mock

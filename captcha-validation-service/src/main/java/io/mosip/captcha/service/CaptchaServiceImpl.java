@@ -37,13 +37,16 @@ public class CaptchaServiceImpl implements CaptchaService {
 	@Value("${mosip.captcha.id.validate}")
 	public String mosipcaptchaValidateId;
 
-	@Value("${version}")
+	@Value("${mosip.captcha.validate.api.version}")
 	private String version;
 
 	@Autowired
 	private RestTemplate restTemplate;
 
 	private final String CAPTCHA_SUCCESS = " Captcha successfully verified";
+
+	public CaptchaServiceImpl() {
+	}
 
 
 	@Override
