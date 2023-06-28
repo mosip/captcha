@@ -33,7 +33,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 	@Value("${mosip.captcha.recaptcha.verify.url}")
 	public String recaptchaVerifyUrl;
 
-	@Value("${mosip.captcha.id.validate}")
+	@Value("${mosip.captcha.validate.api.id}")
 	public String mosipcaptchaValidateId;
 
 	@Value("${mosip.captcha.validate.api.version}")
