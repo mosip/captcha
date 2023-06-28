@@ -1,11 +1,11 @@
 package io.mosip.captcha.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.mosip.captcha.constants.CaptchaErrorCode;
 import io.mosip.captcha.exception.CaptchaException;
+import io.mosip.captcha.utils.CaptchaUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,12 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import io.mosip.captcha.dto.CaptchaRequestDTO;
-import io.mosip.captcha.dto.CaptchaResposneDTO;
+import io.mosip.captcha.dto.CaptchaResponseDTO;
 import io.mosip.captcha.dto.ExceptionJSONInfoDTO;
 import io.mosip.captcha.dto.GoogleCaptchaDTO;
 import io.mosip.captcha.dto.MainResponseDTO;
 import io.mosip.captcha.exception.InvalidRequestCaptchaException;
 import io.mosip.captcha.spi.CaptchaService;
-import io.mosip.kernel.core.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -45,10 +44,6 @@ public class CaptchaServiceImpl implements CaptchaService {
 
 	private final String CAPTCHA_SUCCESS = " Captcha successfully verified";
 
-	public CaptchaServiceImpl() {
-	}
-
-
 	@Override
 	public Object validateCaptcha(Object captchaRequest) throws CaptchaException, InvalidRequestCaptchaException {
 
@@ -57,7 +52,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
 		validateCaptchaRequest((CaptchaRequestDTO) captchaRequest);
 
-		MainResponseDTO<CaptchaResposneDTO> mainResponse = new MainResponseDTO<>();
+		MainResponseDTO<CaptchaResponseDTO> mainResponse = new MainResponseDTO<>();
 
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
 		param.add("secret", recaptchaSecret);
@@ -67,16 +62,16 @@ public class CaptchaServiceImpl implements CaptchaService {
 
 		try {
 			log.info("In captcha service try block to validate the token request via a google verify site rest call"
-							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + "  " + recaptchaVerifyUrl);
-			
+							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + recaptchaVerifyUrl);
+
 			captchaResponse = this.restTemplate.postForObject(recaptchaVerifyUrl, param, GoogleCaptchaDTO.class);
 			if (captchaResponse != null) {
-				log.debug("sessionId", "idType", "id", captchaResponse.toString());
+				log.debug("{}", captchaResponse.toString());
 			}
 		} catch (RestClientException ex) {
 			log.error("In captcha service to validate the token request via a google verify site rest call has failed --->"
-							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + "  " + recaptchaVerifyUrl + "  "
-							+ ex);
+							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + recaptchaVerifyUrl
+							, ex);
 			if (captchaResponse != null && captchaResponse.getErrorCodes() !=null) {
 			throw new CaptchaException(captchaResponse.getErrorCodes().get(0).getErrorCode(),
 					captchaResponse.getErrorCodes().get(0).getMessage());
@@ -89,7 +84,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 			mainResponse.setId(mosipcaptchaValidateId);
 			mainResponse.setResponsetime(captchaResponse.getChallengeTs());
 			mainResponse.setVersion(version);
-			CaptchaResposneDTO response = new CaptchaResposneDTO();
+			CaptchaResponseDTO response = new CaptchaResponseDTO();
 			response.setMessage(CAPTCHA_SUCCESS);
 			response.setSuccess(captchaResponse.isSuccess());
 			mainResponse.setResponse(response);
@@ -99,7 +94,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 								+ captchaResponse.isSuccess());
 			}
 			mainResponse.setId(mosipcaptchaValidateId);
-			mainResponse.setResponsetime(getCurrentResponseTime());
+			mainResponse.setResponsetime(CaptchaUtils.getCurrentResponseTime());
 			mainResponse.setVersion(version);
 			mainResponse.setResponse(null);
 			ExceptionJSONInfoDTO error = new ExceptionJSONInfoDTO(CaptchaErrorCode.INVALID_CAPTCHA_CODE.getErrorCode(),
@@ -116,15 +111,10 @@ public class CaptchaServiceImpl implements CaptchaService {
 	private void validateCaptchaRequest(CaptchaRequestDTO captchaRequest) throws InvalidRequestCaptchaException {
 
 	 if (captchaRequest.getCaptchaToken() == null || captchaRequest.getCaptchaToken().trim().length() == 0) {
-		 	log.debug("sessionId", "idType", "id", captchaRequest.toString());
+		 	log.debug("{}", captchaRequest.toString());
 			throw new InvalidRequestCaptchaException(CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorCode(),
 					CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorMessage());
 		}
-	}
-
-	private String getCurrentResponseTime() {
-		String dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-		return DateUtils.formatDate(new Date(System.currentTimeMillis()), dateTimeFormat);
 	}
 
 }

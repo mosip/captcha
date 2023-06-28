@@ -3,7 +3,7 @@ package io.mosip.captcha.serviceimpl.test;
 import static org.junit.Assert.*;
 
 import io.mosip.captcha.dto.CaptchaRequestDTO;
-import io.mosip.captcha.dto.CaptchaResposneDTO;
+import io.mosip.captcha.dto.CaptchaResponseDTO;
 import io.mosip.captcha.dto.GoogleCaptchaDTO;
 import io.mosip.captcha.dto.MainResponseDTO;
 import io.mosip.captcha.exception.CaptchaException;
@@ -63,7 +63,7 @@ public class CaptchaServiceImplTest {
 	public void validateCaptchaTest() throws CaptchaException, InvalidRequestCaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
 		
-		MainResponseDTO<CaptchaResposneDTO> mainResponse = new MainResponseDTO<>();
+		MainResponseDTO<CaptchaResponseDTO> mainResponse = new MainResponseDTO<>();
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
 		param.add("secret", recaptchaSecret);
 		GoogleCaptchaDTO captchaResponse = new GoogleCaptchaDTO();
@@ -74,7 +74,7 @@ public class CaptchaServiceImplTest {
 		captchaRequest.setCaptchaToken("temp");
 		captchaRequest.getCaptchaToken();
 
-		CaptchaResposneDTO res = new CaptchaResposneDTO();
+		CaptchaResponseDTO res = new CaptchaResponseDTO();
 		res.setMessage("captcha scuccessfully set");
 		res.setSuccess(true);
 		mainResponse.setResponse(res);

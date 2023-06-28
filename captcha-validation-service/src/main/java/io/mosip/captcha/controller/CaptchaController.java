@@ -22,9 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CaptchaController {
 
-	private static final String VALIDATE = "validate";
-
-
 	@Autowired
 	private CaptchaService captchaService;
 
