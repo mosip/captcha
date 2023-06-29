@@ -3,9 +3,9 @@ package io.mosip.captcha.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.mosip.captcha.constants.CaptchaErrorCode;
+import io.mosip.captcha.util.CaptchaErrorCode;
 import io.mosip.captcha.exception.CaptchaException;
-import io.mosip.captcha.utils.CaptchaUtils;
+import io.mosip.captcha.util.CaptchaUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,11 +33,11 @@ public class CaptchaServiceImpl implements CaptchaService {
 	@Value("${mosip.captcha.recaptcha.verify.url}")
 	public String recaptchaVerifyUrl;
 
-	@Value("${mosip.captcha.validate.api.id}")
-	public String mosipcaptchaValidateId;
+	@Value("${mosip.captcha.api.id}")
+	public String captchaApiId;
 
-	@Value("${mosip.captcha.validate.api.version}")
-	private String version;
+	@Value("${mosip.captcha.api.version}")
+	private String captchaApiVersion;
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -81,9 +81,9 @@ public class CaptchaServiceImpl implements CaptchaService {
 		if (captchaResponse!=null && captchaResponse.isSuccess()) {
 			log.info("In captcha service token request has been successfully verified --->"
 							+ captchaResponse.isSuccess());
-			mainResponse.setId(mosipcaptchaValidateId);
+			mainResponse.setId(captchaApiId);
 			mainResponse.setResponsetime(captchaResponse.getChallengeTs());
-			mainResponse.setVersion(version);
+			mainResponse.setVersion(captchaApiVersion);
 			CaptchaResponseDTO response = new CaptchaResponseDTO();
 			response.setMessage(CAPTCHA_SUCCESS);
 			response.setSuccess(captchaResponse.isSuccess());
@@ -93,9 +93,9 @@ public class CaptchaServiceImpl implements CaptchaService {
 				log.error("In captcha service token request has failed --->"
 								+ captchaResponse.isSuccess());
 			}
-			mainResponse.setId(mosipcaptchaValidateId);
+			mainResponse.setId(captchaApiId);
 			mainResponse.setResponsetime(CaptchaUtils.getCurrentResponseTime());
-			mainResponse.setVersion(version);
+			mainResponse.setVersion(captchaApiVersion);
 			mainResponse.setResponse(null);
 			ExceptionJSONInfoDTO error = new ExceptionJSONInfoDTO(CaptchaErrorCode.INVALID_CAPTCHA_CODE.getErrorCode(),
 					CaptchaErrorCode.INVALID_CAPTCHA_CODE.getErrorMessage());

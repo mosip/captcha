@@ -1,10 +1,10 @@
-package io.mosip.captcha.exceptionutils;
+package io.mosip.captcha.advice;
 
 import java.util.ArrayList;
 
-import io.mosip.captcha.constants.CaptchaErrorCode;
+import io.mosip.captcha.util.CaptchaErrorCode;
 import io.mosip.captcha.exception.CaptchaException;
-import io.mosip.captcha.utils.CaptchaUtils;
+import io.mosip.captcha.util.CaptchaUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -22,17 +22,17 @@ public class CaptchaExceptionHandler {
 	@Autowired
 	protected Environment env;
 
-	@Value("${mosip.captcha.id.validate}")
-	public String mosipcaptchaValidateId;
+	@Value("${mosip.captcha.api.id}")
+	public String captchaApiId;
 
-	@Value("${mosip.captcha.validate.api.version}")
-	private String version;
+	@Value("${mosip.captcha.api.version}")
+	private String captchaApiVersion;
 
 	@ExceptionHandler(InvalidRequestCaptchaException.class)
 	public MainResponseDTO<?> handleInvalidCaptchaRequest(InvalidRequestCaptchaException ex) {
 		MainResponseDTO<?> response = new MainResponseDTO<>();
-		response.setId(mosipcaptchaValidateId);
-		response.setVersion(version);
+		response.setId(captchaApiId);
+		response.setVersion(captchaApiVersion);
 		response.setResponsetime(CaptchaUtils.getCurrentResponseTime());
 		response.setResponse(null);
 		ArrayList<ExceptionJSONInfoDTO> errors = new ArrayList<ExceptionJSONInfoDTO>();
@@ -45,8 +45,8 @@ public class CaptchaExceptionHandler {
 	@ExceptionHandler(CaptchaException.class)
 	public MainResponseDTO<?> handleCaptchaException(CaptchaException ex) {
 		MainResponseDTO<?> response = new MainResponseDTO<>();
-		response.setId(mosipcaptchaValidateId);
-		response.setVersion(version);
+		response.setId(captchaApiId);
+		response.setVersion(captchaApiVersion);
 		response.setResponsetime(CaptchaUtils.getCurrentResponseTime());
 		response.setResponse(null);
 		ArrayList<ExceptionJSONInfoDTO> errors = new ArrayList<ExceptionJSONInfoDTO>();
@@ -59,8 +59,8 @@ public class CaptchaExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public MainResponseDTO<?> handleException(Exception ex) {
 		MainResponseDTO<?> response = new MainResponseDTO<>();
-		response.setId(mosipcaptchaValidateId);
-		response.setVersion(version);
+		response.setId(captchaApiId);
+		response.setVersion(captchaApiVersion);
 		response.setResponsetime(CaptchaUtils.getCurrentResponseTime());
 		response.setResponse(null);
 		ArrayList<ExceptionJSONInfoDTO> errors = new ArrayList<ExceptionJSONInfoDTO>();

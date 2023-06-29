@@ -1,4 +1,4 @@
-package io.mosip.captcha.constants;
+package io.mosip.captcha.util;
 
 public enum CaptchaErrorCode {
 
