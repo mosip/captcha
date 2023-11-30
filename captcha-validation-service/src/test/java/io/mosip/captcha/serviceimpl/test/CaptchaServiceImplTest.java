@@ -51,11 +51,11 @@ public class CaptchaServiceImplTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		ReflectionTestUtils.setField(captchaServiceImpl, "recaptchaSecret", "demo");
-		ReflectionTestUtils.setField(captchaServiceImpl, "recaptchaVerifyUrl",
+		ReflectionTestUtils.setField(captchaServiceImpl, "secretKey", "demo");
+		ReflectionTestUtils.setField(captchaServiceImpl, "captchaVerifyUrl",
 				"https://www.google.com/recaptcha/api/siteverify");
-		ReflectionTestUtils.setField(captchaServiceImpl, "mosipcaptchaValidateId", "123");
-		ReflectionTestUtils.setField(captchaServiceImpl, "version", "2.0");
+		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiId", "123");
+		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiVersion", "2.0");
 	}
 
 	
