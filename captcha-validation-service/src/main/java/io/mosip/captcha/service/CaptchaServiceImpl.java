@@ -28,10 +28,10 @@ import lombok.extern.slf4j.Slf4j;
 public class CaptchaServiceImpl implements CaptchaService {
 
 	@Value("${mosip.captcha.secretkey}")
-	public String recaptchaSecret;
+	public String secretKey;
 
-	@Value("${mosip.captcha.recaptcha.verify.url}")
-	public String recaptchaVerifyUrl;
+	@Value("${mosip.captcha.verify.url}")
+	public String captchaVerifyUrl;
 
 	@Value("${mosip.captcha.api.id}")
 	public String captchaApiId;
@@ -55,22 +55,22 @@ public class CaptchaServiceImpl implements CaptchaService {
 		MainResponseDTO<CaptchaResponseDTO> mainResponse = new MainResponseDTO<>();
 
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-		param.add("secret", recaptchaSecret);
+		param.add("secret", secretKey);
 		param.add("response", ((CaptchaRequestDTO) captchaRequest).getCaptchaToken().trim());
 
 		GoogleCaptchaDTO captchaResponse = null;
 
 		try {
 			log.info("In captcha service try block to validate the token request via a google verify site rest call"
-							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + recaptchaVerifyUrl);
+							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + captchaVerifyUrl);
 
-			captchaResponse = this.restTemplate.postForObject(recaptchaVerifyUrl, param, GoogleCaptchaDTO.class);
+			captchaResponse = this.restTemplate.postForObject(captchaVerifyUrl, param, GoogleCaptchaDTO.class);
 			if (captchaResponse != null) {
 				log.debug("{}", captchaResponse.toString());
 			}
 		} catch (RestClientException ex) {
 			log.error("In captcha service to validate the token request via a google verify site rest call has failed --->"
-							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + recaptchaVerifyUrl
+							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + captchaVerifyUrl
 							, ex);
 			if (captchaResponse != null && captchaResponse.getErrorCodes() !=null) {
 			throw new CaptchaException(captchaResponse.getErrorCodes().get(0).getErrorCode(),
