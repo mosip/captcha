@@ -27,8 +27,8 @@ public class CaptchaController {
 
 	@PostMapping(path = "/validatecaptcha", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> validateCaptcha(@Validated @RequestBody MainRequestDTO<CaptchaRequestDTO> captchaRequest,
-			Errors errors) throws InvalidRequestParameterException, CaptchaException, InvalidRequestCaptchaException {
-		log.info("In captcha-validation-service controller to validate the recaptcha token" + captchaRequest);
+			Errors errors) throws CaptchaException, InvalidRequestCaptchaException {
+		log.debug("In captcha-validation-service controller to validate the recaptcha token", captchaRequest);
 		return new ResponseEntity<>(this.captchaService.validateCaptcha(captchaRequest.getRequest()), HttpStatus.OK);
 	}
 

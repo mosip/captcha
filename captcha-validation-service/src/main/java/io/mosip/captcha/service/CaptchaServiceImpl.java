@@ -2,6 +2,7 @@ package io.mosip.captcha.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.mosip.captcha.util.CaptchaErrorCode;
 import io.mosip.captcha.exception.CaptchaException;
@@ -27,11 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CaptchaServiceImpl implements CaptchaService {
 
-	@Value("${mosip.captcha.secretkey}")
-	public String secretKey;
+	@Value("#{${mosip.captcha.secret-key}}")
+	public Map<String,String> secretKeys;
 
-	@Value("${mosip.captcha.verify.url}")
+	@Value("${mosip.captcha.verify-url}")
 	public String captchaVerifyUrl;
+
+	@Value("${mosip.captcha.default.module-name:preregistration}")
+	public String defaultModuleName;
 
 	@Value("${mosip.captcha.api.id}")
 	public String captchaApiId;
@@ -51,11 +55,11 @@ public class CaptchaServiceImpl implements CaptchaService {
 				+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken());
 
 		validateCaptchaRequest((CaptchaRequestDTO) captchaRequest);
-
+		String moduleName = ((CaptchaRequestDTO) captchaRequest).getModuleName();
 		MainResponseDTO<CaptchaResponseDTO> mainResponse = new MainResponseDTO<>();
 
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-		param.add("secret", secretKey);
+		param.add("secret", secretKeys.get(moduleName == null? defaultModuleName : moduleName));
 		param.add("response", ((CaptchaRequestDTO) captchaRequest).getCaptchaToken().trim());
 
 		GoogleCaptchaDTO captchaResponse = null;
@@ -105,7 +109,6 @@ public class CaptchaServiceImpl implements CaptchaService {
 
 		}
 		return mainResponse;
-
 	}
 
 	private void validateCaptchaRequest(CaptchaRequestDTO captchaRequest) throws InvalidRequestCaptchaException {
