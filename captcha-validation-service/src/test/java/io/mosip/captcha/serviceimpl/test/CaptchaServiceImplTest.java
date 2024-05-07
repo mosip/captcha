@@ -25,6 +25,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RunWith(JUnit4.class)
 @SpringBootTest
 @ContextConfiguration(classes = { CaptchaServiceImpl.class })
@@ -51,7 +54,10 @@ public class CaptchaServiceImplTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		ReflectionTestUtils.setField(captchaServiceImpl, "secretKey", "demo");
+		Map<String, String> secrets = new HashMap<>();
+		secrets.put("resident", "resident-captcha-secret");
+		secrets.put("preregistration", "pre-registration-captcha-secret");
+		ReflectionTestUtils.setField(captchaServiceImpl, "secretKeys", secrets);
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaVerifyUrl",
 				"https://www.google.com/recaptcha/api/siteverify");
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiId", "123");
