@@ -6,7 +6,7 @@ if [ $# -ge 1 ] ; then
   export KUBECONFIG=$1
 fi
 
-NS=kernel
+NS=captcha
 CHART_VERSION=12.0.2
 
 echo Create $NS namespace
