@@ -13,18 +13,36 @@
 
 	<name>captcha-validation-service</name>
 	<description>A service to generate and validate captcha</description>
-	<version>0.9.0-SNAPSHOT</version>
+	<version>1.2.1-java21-SNAPSHOT</version>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>21</java.version>
 		<maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
 		<io.micrometer.prometheus.version>1.4.2</io.micrometer.prometheus.version>
 		<spring-cloud-config.version>2.0.0.RELEASE</spring-cloud-config.version>
-		<kernel.version>1.2.1-SNAPSHOT</kernel.version>	
+		<kernel.version>1.2.1-java21-SNAPSHOT</kernel.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>io.mosip.kernel</groupId>
+				<artifactId>kernel-bom</artifactId>
+				<version>1.2.1-java21-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.mosip.kernel</groupId>
+				<artifactId>kernel-auth-adapter</artifactId>
+				<version>1.2.1-java21-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-api</artifactId>
+				<version>5.7.1</version>
+				<scope>test</scope>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
@@ -35,7 +53,7 @@
 			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
-				<version>${lombok.version}</version>
+				<version>1.18.30</version>
 				<scope>compile</scope>
 			</dependency>
 		</dependencies>
@@ -62,7 +80,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
-			<version>${spring-cloud-config.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -110,12 +127,12 @@
 				<dependency>
 					<groupId>io.mosip.kernel</groupId>
 					<artifactId>kernel-ref-idobjectvalidator</artifactId>
-					<version>1.2.0-rc1</version>
+					<version>1.2.0.1-B2</version>
 				</dependency>
 				<dependency>
 					<groupId>io.mosip.kernel</groupId>
 					<artifactId>kernel-transliteration-icu4j</artifactId>
-					<version>1.2.0-rc1</version>
+					<version>1.2.0.1-B2</version>
 				</dependency>
 			</dependencies>
 			<build>

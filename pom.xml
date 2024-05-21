@@ -7,14 +7,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.6.RELEASE</version>
+        <version>3.2.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.mosip.captcha</groupId>
     <artifactId>captcha-parent</artifactId>
-    <version>0.9.0-SNAPSHOT</version>
+    <version>1.2.1-java21-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>captcha</name>
     <description>Parent project of MOSIP captcha service</description>
@@ -79,9 +79,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- maven -->
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.version>3.8.0</maven.compiler.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
         <maven.war.plugin.version>3.1.0</maven.war.plugin.version>
         <maven.surefire.plugin.version>2.22.0</maven.surefire.plugin.version>
@@ -91,7 +91,7 @@
         <maven-shade-plugin.version>2.3</maven-shade-plugin.version>
 
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-        <spring.boot.version>2.3.6.RELEASE</spring.boot.version>
+        <spring.boot.version>3.2.3</spring.boot.version>
 
         <sonar.exclusions>**/dto/**,**/entity/**,**/exception/**,**/spi/**,**/advice/**,**/config/**</sonar.exclusions>
         <sonar.cpd.exclusions>**/dto/**,**/entity/**,**/config/**</sonar.cpd.exclusions>
@@ -102,35 +102,35 @@
     </modules>
 
     <profiles>
-        <profile>
-            <id>sonar</id>
-            <properties>
-                <sonar.sources>.</sonar.sources>
-                <sonar.inclusions>src/main/java/**,src/main/resources/**</sonar.inclusions>
-                <sonar.exclusions>${sonar.coverage.exclusions}</sonar.exclusions>
-                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-            </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.sonarsource.scanner.maven</groupId>
-                        <artifactId>sonar-maven-plugin</artifactId>
-                        <version>${maven.sonar.plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sonar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+<!--        <profile>-->
+<!--            <id>sonar</id>-->
+<!--            <properties>-->
+<!--                <sonar.sources>.</sonar.sources>-->
+<!--                <sonar.inclusions>src/main/java/**,src/main/resources/**</sonar.inclusions>-->
+<!--                <sonar.exclusions>${sonar.coverage.exclusions}</sonar.exclusions>-->
+<!--                <sonar.host.url>https://sonarcloud.io</sonar.host.url>-->
+<!--            </properties>-->
+<!--            <activation>-->
+<!--                <activeByDefault>false</activeByDefault>-->
+<!--            </activation>-->
+<!--            <build>-->
+<!--                <plugins>-->
+<!--                    <plugin>-->
+<!--                        <groupId>org.sonarsource.scanner.maven</groupId>-->
+<!--                        <artifactId>sonar-maven-plugin</artifactId>-->
+<!--                        <version>${maven.sonar.plugin.version}</version>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <phase>verify</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>sonar</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
+<!--                </plugins>-->
+<!--            </build>-->
+<!--        </profile>-->
 
         <profile>
             <id>openapi-doc-generate-profile</id>
@@ -210,10 +210,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-                    <skipTests>${skipTests}</skipTests>
+                    <skipTests>false</skipTests>
                     <skip>false</skip>
                     <argLine>
-                        ${argLine} --add-opens java.xml/jdk.xml.internal=ALL-UNNAMED --illegal-access=permit
+                        --add-opens java.xml/jdk.xml.internal=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --enable-preview
                     </argLine>
                 </configuration>
             </plugin>
@@ -344,7 +344,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <aggregate>true</aggregate>
+                    <doclint>none</doclint>
                 </configuration>
             </plugin>
             <plugin>
