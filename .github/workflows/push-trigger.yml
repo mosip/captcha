@@ -17,13 +17,13 @@ on:
       - '!release-branch'
       - master
       - 1.*
-      - develop
+      - develop*
       - MOSIP*
       - release*
 
 jobs:
   build-maven-captcha-validation-service:
-    uses: mosip/kattu/.github/workflows/maven-build.yml@master
+    uses: mosip/kattu/.github/workflows/maven-build.yml@master-java21
     with:
       SERVICE_LOCATION: ./
       BUILD_ARTIFACT: captcha-validation-service
