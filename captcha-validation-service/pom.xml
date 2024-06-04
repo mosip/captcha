@@ -22,6 +22,15 @@
 		</license>
 	</licenses>
 
+	<developers>
+		<developer>
+			<name>Mosip</name>
+			<email>mosip.emailnotifier@gmail.com</email>
+			<organization>io.mosip</organization>
+			<organizationUrl>https://github.com/mosip/captcha</organizationUrl>
+		</developer>
+	</developers>
+
 	<properties>
 		<java.version>11</java.version>
 		<maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
