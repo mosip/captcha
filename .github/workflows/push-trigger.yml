@@ -25,7 +25,7 @@ jobs:
   build-maven-captcha-validation-service:
     uses: mosip/kattu/.github/workflows/maven-build.yml@master
     with:
-      SERVICE_LOCATION: ./
+      SERVICE_LOCATION: ./captcha-validation-service
       BUILD_ARTIFACT: captcha-validation-service
     secrets:
       OSSRH_USER: ${{ secrets.OSSRH_USER }}
@@ -39,7 +39,7 @@ jobs:
     needs: build-maven-captcha-validation-service
     uses: mosip/kattu/.github/workflows/maven-publish-to-nexus.yml@master
     with:
-      SERVICE_LOCATION: ./
+      SERVICE_LOCATION: ./captcha-validation-service
     secrets:
       OSSRH_USER: ${{ secrets.OSSRH_USER }}
       OSSRH_SECRET: ${{ secrets.OSSRH_SECRET }}
@@ -53,7 +53,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - SERVICE_LOCATION: 'captcha-validation-service'
+          - SERVICE_LOCATION: './captcha-validation-service'
             SERVICE_NAME: 'captcha-validation-service'
             BUILD_ARTIFACT: 'captcha-validation-service'
       fail-fast: false
@@ -74,7 +74,7 @@ jobs:
     if: "${{  github.event_name != 'pull_request' }}"
     uses: mosip/kattu/.github/workflows/maven-sonar-analysis.yml@master
     with:
-      SERVICE_LOCATION: ./
+      SERVICE_LOCATION: ./captcha-validation-service
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       ORG_KEY: ${{ secrets.ORG_KEY }}
