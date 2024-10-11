@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 
 @Data
@@ -24,7 +25,7 @@ public class GoogleCaptchaDTO implements Serializable{
 	@JsonProperty("hostname")
 	private String hostname;
 	
-    @JsonProperty("errorCodes")
-	private List<ExceptionJSONInfoDTO> errorCodes;
+    @JsonProperty("error-codes")
+	private List<String> errorCodes;
 
 }

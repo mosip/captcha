@@ -69,16 +69,14 @@ public class CaptchaServiceImpl implements CaptchaService {
 							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + captchaVerifyUrl);
 
 			captchaResponse = this.restTemplate.postForObject(captchaVerifyUrl, param, GoogleCaptchaDTO.class);
-			if (captchaResponse != null) {
-				log.debug("{}", captchaResponse.toString());
-			}
+			log.debug(" captchaResponse -> {}", captchaResponse);
+
 		} catch (RestClientException ex) {
 			log.error("In captcha service to validate the token request via a google verify site rest call has failed --->"
 							+ ((CaptchaRequestDTO) captchaRequest).getCaptchaToken() + captchaVerifyUrl
 							, ex);
 			if (captchaResponse != null && captchaResponse.getErrorCodes() !=null) {
-			throw new CaptchaException(captchaResponse.getErrorCodes().get(0).getErrorCode(),
-					captchaResponse.getErrorCodes().get(0).getMessage());
+				throw new CaptchaException(captchaResponse.getErrorCodes().get(0), captchaResponse.getErrorCodes().get(0));
 			}
 		}
 
@@ -114,7 +112,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 	private void validateCaptchaRequest(CaptchaRequestDTO captchaRequest) throws InvalidRequestCaptchaException {
 
 	 if (captchaRequest.getCaptchaToken() == null || captchaRequest.getCaptchaToken().trim().length() == 0) {
-		 	log.debug("{}", captchaRequest.toString());
+		 	log.debug("{}", captchaRequest);
 			throw new InvalidRequestCaptchaException(CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorCode(),
 					CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorMessage());
 		}
