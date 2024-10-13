@@ -90,8 +90,7 @@ public class CaptchaServiceImplTest {
 		param.add("secret", "pre-registration-captcha-secret");
 		param.add("response", "temp");
 
-		Mockito.when(restTemplate.postForObject("https://www.google.com/recaptcha/api/siteverify", param, GoogleReCaptchaV2Response.class))
-				.thenReturn(googleReCaptchaV2Response);
+		Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any())).thenReturn(googleReCaptchaV2Response);
 		assertNotNull(captchaServiceImpl.validateCaptcha(captchaRequest));
 	}
 
