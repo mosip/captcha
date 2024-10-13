@@ -2,6 +2,7 @@ package io.mosip.captcha.serviceimpl.test;
 
 import static org.junit.Assert.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.mosip.captcha.dto.CaptchaRequestDTO;
 import io.mosip.captcha.dto.CaptchaResponseDTO;
 import io.mosip.captcha.dto.GoogleReCaptchaV2Response;
@@ -51,6 +52,8 @@ public class CaptchaServiceImplTest {
 	@Mock
 	private RestTemplate restTemplate;
 
+	private ObjectMapper objectMapper = new ObjectMapper();
+
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -66,34 +69,34 @@ public class CaptchaServiceImplTest {
 
 	
 	@Test
-	public void validateCaptchaTest() throws CaptchaException, InvalidRequestCaptchaException {
+	public void validateCaptcha_withValidInput_thenPass() throws CaptchaException, InvalidRequestCaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
-		
-		ResponseWrapper<CaptchaResponseDTO> mainResponse = new ResponseWrapper<>();
-		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-		param.add("secret", recaptchaSecret);
-		GoogleReCaptchaV2Response captchaResponse = new GoogleReCaptchaV2Response();
-		captchaResponse.setHostname(recaptchaVerifyUrl);
-		captchaResponse.setSuccess(true);
-		captchaResponse.setChallengeTs("Success");
-
 		captchaRequest.setCaptchaToken("temp");
-		captchaRequest.getCaptchaToken();
+
+		GoogleReCaptchaV2Response googleReCaptchaV2Response = new GoogleReCaptchaV2Response();
+		googleReCaptchaV2Response.setHostname(recaptchaVerifyUrl);
+		googleReCaptchaV2Response.setSuccess(true);
+		googleReCaptchaV2Response.setChallengeTs("Success");
 
 		CaptchaResponseDTO res = new CaptchaResponseDTO();
 		res.setMessage("captcha scuccessfully set");
 		res.setSuccess(true);
-		mainResponse.setResponse(res);
-		mainResponse.setId(mosipcaptchaValidateId);
-		mainResponse.setVersion(version);
+		ResponseWrapper<CaptchaResponseDTO> responseWrapper = new ResponseWrapper<>();
+		responseWrapper.setResponse(res);
+		responseWrapper.setId(mosipcaptchaValidateId);
+		responseWrapper.setVersion(version);
 
-		Mockito.when(restTemplate.postForObject("https://www.google.com/recaptcha/api/siteverify",
-				"{secret=[demo], response=[aRsasahksasa]}", GoogleReCaptchaV2Response.class)).thenReturn(captchaResponse);
+		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+		param.add("secret", "pre-registration-captcha-secret");
+		param.add("response", "temp");
+
+		Mockito.when(restTemplate.postForObject("https://www.google.com/recaptcha/api/siteverify", param, GoogleReCaptchaV2Response.class))
+				.thenReturn(googleReCaptchaV2Response);
 		assertNotNull(captchaServiceImpl.validateCaptcha(captchaRequest));
 	}
 
 	@Test(expected = InvalidRequestCaptchaException.class)
-	public void validateCaptchaExceptionTest() throws CaptchaException, InvalidRequestCaptchaException {
+	public void validateCaptcha_withInvalidRequest_throwException() throws CaptchaException, InvalidRequestCaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
 		GoogleReCaptchaV2Response captchaResponse = new GoogleReCaptchaV2Response();
 		captchaResponse.setHostname(recaptchaVerifyUrl);
