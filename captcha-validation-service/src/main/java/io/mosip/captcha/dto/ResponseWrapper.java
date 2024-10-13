@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class MainResponseDTO<T> implements Serializable{
+public class ResponseWrapper<T> implements Serializable{
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3384945682672832638L;
