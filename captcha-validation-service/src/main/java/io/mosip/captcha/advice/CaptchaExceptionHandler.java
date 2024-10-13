@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import io.mosip.captcha.dto.ExceptionJSONInfoDTO;
-import io.mosip.captcha.dto.MainResponseDTO;
+import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.InvalidRequestCaptchaException;
 
 
@@ -29,8 +29,8 @@ public class CaptchaExceptionHandler {
 	private String captchaApiVersion;
 
 	@ExceptionHandler(InvalidRequestCaptchaException.class)
-	public MainResponseDTO<?> handleInvalidCaptchaRequest(InvalidRequestCaptchaException ex) {
-		MainResponseDTO<?> response = new MainResponseDTO<>();
+	public ResponseWrapper<?> handleInvalidCaptchaRequest(InvalidRequestCaptchaException ex) {
+		ResponseWrapper<?> response = new ResponseWrapper<>();
 		response.setId(captchaApiId);
 		response.setVersion(captchaApiVersion);
 		response.setResponsetime(CaptchaUtils.getCurrentResponseTime());
@@ -43,8 +43,8 @@ public class CaptchaExceptionHandler {
 	}
 
 	@ExceptionHandler(CaptchaException.class)
-	public MainResponseDTO<?> handleCaptchaException(CaptchaException ex) {
-		MainResponseDTO<?> response = new MainResponseDTO<>();
+	public ResponseWrapper<?> handleCaptchaException(CaptchaException ex) {
+		ResponseWrapper<?> response = new ResponseWrapper<>();
 		response.setId(captchaApiId);
 		response.setVersion(captchaApiVersion);
 		response.setResponsetime(CaptchaUtils.getCurrentResponseTime());
@@ -57,8 +57,8 @@ public class CaptchaExceptionHandler {
 	}
 	
 	@ExceptionHandler(Exception.class)
-	public MainResponseDTO<?> handleException(Exception ex) {
-		MainResponseDTO<?> response = new MainResponseDTO<>();
+	public ResponseWrapper<?> handleException(Exception ex) {
+		ResponseWrapper<?> response = new ResponseWrapper<>();
 		response.setId(captchaApiId);
 		response.setVersion(captchaApiVersion);
 		response.setResponsetime(CaptchaUtils.getCurrentResponseTime());

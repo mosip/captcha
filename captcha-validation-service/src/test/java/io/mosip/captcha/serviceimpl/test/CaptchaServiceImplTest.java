@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import io.mosip.captcha.dto.CaptchaRequestDTO;
 import io.mosip.captcha.dto.CaptchaResponseDTO;
-import io.mosip.captcha.dto.GoogleCaptchaDTO;
-import io.mosip.captcha.dto.MainResponseDTO;
+import io.mosip.captcha.dto.GoogleReCaptchaV2Response;
+import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.CaptchaException;
 import io.mosip.captcha.exception.InvalidRequestCaptchaException;
 import io.mosip.captcha.service.CaptchaServiceImpl;
@@ -57,7 +57,7 @@ public class CaptchaServiceImplTest {
 		Map<String, String> secrets = new HashMap<>();
 		secrets.put("resident", "resident-captcha-secret");
 		secrets.put("preregistration", "pre-registration-captcha-secret");
-		ReflectionTestUtils.setField(captchaServiceImpl, "secretKeys", secrets);
+		ReflectionTestUtils.setField(captchaServiceImpl, "secrets", secrets);
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaVerifyUrl",
 				"https://www.google.com/recaptcha/api/siteverify");
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiId", "123");
@@ -69,10 +69,10 @@ public class CaptchaServiceImplTest {
 	public void validateCaptchaTest() throws CaptchaException, InvalidRequestCaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
 		
-		MainResponseDTO<CaptchaResponseDTO> mainResponse = new MainResponseDTO<>();
+		ResponseWrapper<CaptchaResponseDTO> mainResponse = new ResponseWrapper<>();
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
 		param.add("secret", recaptchaSecret);
-		GoogleCaptchaDTO captchaResponse = new GoogleCaptchaDTO();
+		GoogleReCaptchaV2Response captchaResponse = new GoogleReCaptchaV2Response();
 		captchaResponse.setHostname(recaptchaVerifyUrl);
 		captchaResponse.setSuccess(true);
 		captchaResponse.setChallengeTs("Success");
@@ -88,14 +88,14 @@ public class CaptchaServiceImplTest {
 		mainResponse.setVersion(version);
 
 		Mockito.when(restTemplate.postForObject("https://www.google.com/recaptcha/api/siteverify",
-				"{secret=[demo], response=[aRsasahksasa]}", GoogleCaptchaDTO.class)).thenReturn(captchaResponse);
+				"{secret=[demo], response=[aRsasahksasa]}", GoogleReCaptchaV2Response.class)).thenReturn(captchaResponse);
 		assertNotNull(captchaServiceImpl.validateCaptcha(captchaRequest));
 	}
 
 	@Test(expected = InvalidRequestCaptchaException.class)
 	public void validateCaptchaExceptionTest() throws CaptchaException, InvalidRequestCaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
-		GoogleCaptchaDTO captchaResponse = new GoogleCaptchaDTO();
+		GoogleReCaptchaV2Response captchaResponse = new GoogleReCaptchaV2Response();
 		captchaResponse.setHostname(recaptchaVerifyUrl);
 		captchaResponse.setSuccess(true);
 		captchaResponse.setChallengeTs("Success");

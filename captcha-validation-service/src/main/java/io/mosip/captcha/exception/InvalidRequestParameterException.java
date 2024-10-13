@@ -3,7 +3,7 @@ package io.mosip.captcha.exception;
 import java.util.List;
 
 import io.mosip.captcha.dto.ExceptionJSONInfoDTO;
-import io.mosip.captcha.dto.MainResponseDTO;
+import io.mosip.captcha.dto.ResponseWrapper;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ public class InvalidRequestParameterException extends Exception {
 	 */
 	private static final long serialVersionUID = -3898906527162403384L;
 	
-	private MainResponseDTO<?> mainResponseDto;
+	private ResponseWrapper<?> responseWrapper;
 	private List<ExceptionJSONInfoDTO> exptionList;
 	private String operation;
 	
@@ -29,21 +29,21 @@ public class InvalidRequestParameterException extends Exception {
 		super();
 	}
 
-	public InvalidRequestParameterException(String errCode, String errMessage,MainResponseDTO<?> response) {
-		this.mainResponseDto=response;
+	public InvalidRequestParameterException(String errCode, String errMessage, ResponseWrapper<?> response) {
+		this.responseWrapper =response;
 	}
-	public InvalidRequestParameterException(String errorCode, String errorMessage, Throwable rootCause,MainResponseDTO<?> response) {
-		this.mainResponseDto=response;
+	public InvalidRequestParameterException(String errorCode, String errorMessage, Throwable rootCause, ResponseWrapper<?> response) {
+		this.responseWrapper =response;
 	}
 	
 	
-	public InvalidRequestParameterException(List<ExceptionJSONInfoDTO> exptionList,MainResponseDTO<?> response) {
-		this.mainResponseDto=response;
+	public InvalidRequestParameterException(List<ExceptionJSONInfoDTO> exptionList, ResponseWrapper<?> response) {
+		this.responseWrapper =response;
 		this.exptionList=exptionList;
 	}
 	
-	public InvalidRequestParameterException(List<ExceptionJSONInfoDTO> exptionList,String operation,MainResponseDTO<?> response) {
-		this.mainResponseDto=response;
+	public InvalidRequestParameterException(List<ExceptionJSONInfoDTO> exptionList, String operation, ResponseWrapper<?> response) {
+		this.responseWrapper =response;
 		this.exptionList=exptionList;
 		this.operation=operation;
 	}
