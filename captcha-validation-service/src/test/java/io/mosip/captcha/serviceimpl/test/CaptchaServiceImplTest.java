@@ -37,9 +37,6 @@ public class CaptchaServiceImplTest {
 	@InjectMocks
 	private CaptchaServiceImpl captchaServiceImpl;
 
-	@Value("${mosip.captcha.secretkey}")
-	public String recaptchaSecret;
-
 	@Value("${mosip.captcha.recaptcha.verify.url}")
 	public String recaptchaVerifyUrl;
 
@@ -60,7 +57,7 @@ public class CaptchaServiceImplTest {
 		Map<String, String> secrets = new HashMap<>();
 		secrets.put("resident", "resident-captcha-secret");
 		secrets.put("preregistration", "pre-registration-captcha-secret");
-		ReflectionTestUtils.setField(captchaServiceImpl, "secrets", secrets);
+		ReflectionTestUtils.setField(captchaServiceImpl, "secret", secrets);
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaVerifyUrl",
 				"https://www.google.com/recaptcha/api/siteverify");
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiId", "123");

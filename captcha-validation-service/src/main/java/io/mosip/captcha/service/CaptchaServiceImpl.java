@@ -1,12 +1,9 @@
 package io.mosip.captcha.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import io.mosip.captcha.util.CaptchaErrorCode;
 import io.mosip.captcha.exception.CaptchaException;
-import io.mosip.captcha.util.CaptchaUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +18,20 @@ import org.springframework.web.client.RestTemplate;
 
 import io.mosip.captcha.dto.CaptchaRequestDTO;
 import io.mosip.captcha.dto.CaptchaResponseDTO;
-import io.mosip.captcha.dto.ExceptionJSONInfoDTO;
 import io.mosip.captcha.dto.GoogleReCaptchaV2Response;
 import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.InvalidRequestCaptchaException;
 import io.mosip.captcha.spi.CaptchaService;
 import lombok.extern.slf4j.Slf4j;
 
-
-@ConfigurationProperties(prefix = "mosip.captcha.secret-key")
+@ConfigurationProperties(prefix = "mosip.captcha")
 @Service
 @Slf4j
 public class CaptchaServiceImpl implements CaptchaService {
 
 	@Getter
 	@Setter
-    public Map<String,String> secrets;
+	private Map<String, String> secret;
 
 	@Value("${mosip.captcha.verify-url}")
 	public String captchaVerifyUrl;
@@ -61,7 +56,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 		String moduleName = ((CaptchaRequestDTO) captchaRequest).getModuleName();
 
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-		param.add("secret", secrets.get(moduleName == null? defaultModuleName : moduleName));
+		param.add("secret", secret.get(moduleName == null? defaultModuleName : moduleName));
 		param.add("response", ((CaptchaRequestDTO) captchaRequest).getCaptchaToken().trim());
 
 		if(param.get("secret") == null) {
