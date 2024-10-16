@@ -21,14 +21,3 @@ This is for better compatibility with future PostgreSQL versions.
    spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
    ```
 This is to maintain compatibility with existing ANT-style path patterns.
-
-### Add auth-adapter in a class-path to run a cache
-   ```
-   <dependency>
-       <groupId>io.mosip.kernel</groupId>
-       <artifactId>kernel-auth-adapter</artifactId>
-       <version>${kernel.auth.adapter.version}</version>
-   </dependency>
-   ```
-
-Refer [Module Configuration](https://docs.mosip.io/1.2.0/modules/module-configuration) for location of these files.
