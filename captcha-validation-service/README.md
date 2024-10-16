@@ -10,9 +10,11 @@ This service is used to validate the Captcha in the Login flow.
 
 1. Google Recaptcha
 
-Below is a map with list of modules with their respective secret keys to validate the captcha tokens
+Below is the config key name format to provide secret key for any modules.
 
-`mosip.captcha.secret-key={ 'preregistration' : 'secret key generated for preregistration domain' }`
+`mosip.captcha.secret.<module-name>=secret-key-generated-for-the-module`
+
+Eg: mosip.captcha.secret.preregistration=secret-key-generated-for-the-preregistration-module
 
 
 # Example
@@ -31,7 +33,7 @@ Request:
 }
 ```
 
-Based on the module name, the respective secret is fetched from `mosip.captcha.secret-key` and used to validate the provided captcha token.
+Based on the module name, the respective secret is fetched from `mosip.captcha.secret.<module-name>` property and used to validate the provided captcha token.
 
 Response:
 

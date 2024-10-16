@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class GoogleCaptchaDTO implements Serializable{
+public class GoogleReCaptchaV2Response implements Serializable{
 
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class GoogleCaptchaDTO implements Serializable{
 	@JsonProperty("hostname")
 	private String hostname;
 	
-    @JsonProperty("errorCodes")
-	private List<ExceptionJSONInfoDTO> errorCodes;
+    @JsonProperty("error-codes")
+	private List<String> errorCodes;
 
 }
