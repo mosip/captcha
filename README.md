@@ -12,6 +12,7 @@ and mvn version - 3.9.6
     ```
     $ cd <service folder>
     $ docker build -f Dockerfile
+    ```
 3. Configure module wise secrets in the [application-default.properties](captcha-validation-service/src/main/resources/application-default.properties)
 4. Run [CaptchaServiceApplication.java](captcha-validation-service/src/main/java/io/mosip/captcha/CaptchaServiceApplication.java) from IDE.
 5. Service should be accessible at http://localhost:9089/v1/captcha
