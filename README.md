@@ -2,7 +2,7 @@
 A single place to have all captcha needs across your service. 
 
 ## Build & run (for developers)
-The project requires JDK 1.21.
+The project requires JDK 21.0.3
 and mvn version - 3.9.6
 1. Build and install:
     ```
@@ -17,7 +17,7 @@ and mvn version - 3.9.6
 5. Service should be accessible at http://localhost:9089/v1/captcha
 
 ## Configuration
-Digital Card Service uses the following configuration files that are accessible in this [repository](https://github.com/mosip/mosip-config/tree/master).
+Captcha Validation Service uses the following configuration files that are accessible in this [repository](https://github.com/mosip/mosip-config/tree/master).
 Please refer to the required released tagged version for configuration.
 1. [Configuration-Captcha](https://github.com/mosip/mosip-config/blob/master/captcha-default.properties)
 2. [Configuration-Application](https://github.com/mosip/mosip-config/blob/master/application-default.properties)
