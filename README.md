@@ -20,7 +20,6 @@ and mvn version - 3.9.6
 Captcha Validation Service uses the following configuration files that are accessible in this [repository](https://github.com/mosip/mosip-config/tree/master).
 Please refer to the required released tagged version for configuration.
 1. [Configuration-Captcha](https://github.com/mosip/mosip-config/blob/master/captcha-default.properties)
-2. [Configuration-Application](https://github.com/mosip/mosip-config/blob/master/application-default.properties)
 
 ## Deploy
 To deploy captcha-service on Kubernetes cluster using Dockers refer to [Sandbox Deployment](https://docs.mosip.io/1.2.0/deploymentnew/v3-installation).
