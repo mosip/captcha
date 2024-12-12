@@ -7,6 +7,8 @@ import io.mosip.captcha.dto.RequestWrapper;
 import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.InvalidRequestCaptchaException;
 import io.mosip.captcha.spi.CaptchaService;
+import io.mosip.captcha.util.CaptchaErrorCode;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class CaptchaControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    public void testValidateCaptchaEndpoint_withValidRequest() throws Exception {
+    public void validateCaptcha_withValidRequest_returnSuccessResponse() throws Exception {
         RequestWrapper<CaptchaRequestDTO> requestWrapper = new RequestWrapper<>();
         CaptchaRequestDTO requestDTO = new CaptchaRequestDTO();
         requestDTO.setCaptchaToken("token");
@@ -59,11 +61,11 @@ public class CaptchaControllerTest {
     }
 
     @Test
-    public void testValidateCaptchaEndpoint_withInvalidRequest() throws Exception {
+    public void validateCaptcha_withInvalidRequest_returnErrorResponse() throws Exception {
         RequestWrapper<CaptchaRequestDTO> requestWrapper = new RequestWrapper<>();
         requestWrapper.setRequest(new CaptchaRequestDTO());
 
-        when(captchaService.validateCaptcha(any(CaptchaRequestDTO.class))).thenThrow(new InvalidRequestCaptchaException("", ""));
+        when(captchaService.validateCaptcha(any(CaptchaRequestDTO.class))).thenThrow(new InvalidRequestCaptchaException(CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorCode(), CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorMessage()));
 
         mockMvc.perform(post("/validatecaptcha")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -71,6 +73,8 @@ public class CaptchaControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.errors").isArray());
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors", Matchers.hasSize(Matchers.greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.errors[0].errorCode", Matchers.is(CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorCode())));
     }
 }
