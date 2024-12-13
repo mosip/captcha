@@ -6,16 +6,13 @@ if [ $# -ge 1 ] ; then
   export KUBECONFIG=$1
 fi
 
-NS=captcha
-CHART_VERSION=0.1.0-beta.1
-
-function installing_captcha() {
-
   NS=captcha
-  CHART_VERSION=0.1.0-develop
+  CHART_VERSION=0.1.0-beta.1
 
   echo Create $NS namespace
   kubectl create ns $NS || true
+
+function installing_captcha() {
 
   echo Istio label
 
