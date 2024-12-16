@@ -7,7 +7,7 @@ if [ $# -ge 1 ] ; then
 fi
 
   NS=captcha
-  CHART_VERSION=0.1.0-beta.1
+  CHART_VERSION=0.1.0-beta.1-develop
 
   echo Create $NS namespace
   kubectl create ns $NS || true
