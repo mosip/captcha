@@ -9,11 +9,14 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.mosip.captcha.util.ErrorConstants;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * This DTO class is used to define the initial request parameters.
@@ -25,34 +28,24 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 public class RequestWrapper<T> implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -4966448852014107698L;
 
-	/**
-	 * Id
-	 */
 	private String id;
-	/**
-	 * version
-	 */
 	private String version;
-	/**
-	 * Request Date Time
-	 */
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	@Setter(AccessLevel.NONE)
 	@Getter(AccessLevel.NONE)
 	private Date requesttime;
-	/**
-	 * Request Object
-	 */
+
+	@Valid
+	@NotNull(message = ErrorConstants.INVALID_CAPTCHA_REQUEST)
 	private T request;
-	
+
 	public Date getRequesttime() {
 		return requesttime!=null ? new Date(requesttime.getTime()):null;
 	}

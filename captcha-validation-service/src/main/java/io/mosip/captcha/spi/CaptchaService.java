@@ -1,11 +1,13 @@
 package io.mosip.captcha.spi;
 
+import io.mosip.captcha.dto.CaptchaRequestDTO;
+import io.mosip.captcha.dto.CaptchaResponseDTO;
+import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.CaptchaException;
-import io.mosip.captcha.exception.InvalidRequestCaptchaException;
 
 public interface CaptchaService{
 
-	Object validateCaptcha(Object captchaRequest) throws CaptchaException, InvalidRequestCaptchaException;
+	ResponseWrapper<CaptchaResponseDTO> validateCaptcha(CaptchaRequestDTO captchaRequest) throws CaptchaException;
 
 
 }
