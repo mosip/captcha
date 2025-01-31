@@ -36,7 +36,7 @@ public class CaptchaControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    public void testValidateCaptchaEndpoint_withValidRequest() throws Exception {
+    public void testValidateCaptchaEndpoint_withValidRequest_thenPass() throws Exception {
         RequestWrapper<CaptchaRequestDTO> requestWrapper = new RequestWrapper<>();
         CaptchaRequestDTO requestDTO = new CaptchaRequestDTO();
         requestDTO.setCaptchaToken("token");
@@ -59,7 +59,7 @@ public class CaptchaControllerTest {
     }
 
     @Test
-    public void testValidateCaptchaEndpoint_withInvalidRequest() throws Exception {
+    public void testValidateCaptchaEndpoint_withInvalidRequest_thenError() throws Exception {
         RequestWrapper<CaptchaRequestDTO> requestWrapper = new RequestWrapper<>();
         requestWrapper.setRequest(new CaptchaRequestDTO());
 

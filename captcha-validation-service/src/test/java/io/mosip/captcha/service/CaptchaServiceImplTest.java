@@ -65,7 +65,7 @@ public class CaptchaServiceImplTest {
 	}
 
 	@Test(expected = CaptchaException.class)
-	public void validateCaptcha_withInvalidModuleName_throwException() throws CaptchaException {
+	public void validateCaptcha_withInvalidModuleName_thenException() throws CaptchaException {
 		ReflectionTestUtils.setField(captchaServiceImpl, "secret", Collections.emptyMap());
 
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
@@ -75,7 +75,7 @@ public class CaptchaServiceImplTest {
 	}
 
 	@Test(expected = CaptchaException.class)
-	public void validateCaptcha_withRestClientFailure_throwException() throws CaptchaException {
+	public void validateCaptcha_withRestClientFailure_thenException() throws CaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
 		captchaRequest.setCaptchaToken("captcha_token");
 		Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any())).thenThrow(new RestClientException("captcha token validation request failed"));
@@ -83,7 +83,7 @@ public class CaptchaServiceImplTest {
 	}
 
 	@Test(expected = CaptchaException.class)
-	public void validateCaptcha_withInvalidToken_throwException() throws CaptchaException {
+	public void validateCaptcha_withInvalidToken_thenException() throws CaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
 		captchaRequest.setCaptchaToken("captcha_token");
 
