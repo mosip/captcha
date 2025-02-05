@@ -1,6 +1,5 @@
 package io.mosip.captcha.service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import io.mosip.captcha.util.ErrorConstants;
@@ -12,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -52,11 +53,11 @@ public class CaptchaServiceImpl implements CaptchaService {
 	public ResponseWrapper<CaptchaResponseDTO> validateCaptcha(CaptchaRequestDTO captchaRequest) throws CaptchaException {
 		String moduleName = captchaRequest.getModuleName();
 
-		Map<String, String> param = new HashMap<>();
-		param.put("secret", secret.get(moduleName == null? defaultModuleName : moduleName));
-		param.put("response", captchaRequest.getCaptchaToken().trim());
+		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+		param.add("secret", secret.get(moduleName == null? defaultModuleName : moduleName));
+		param.add("response", captchaRequest.getCaptchaToken().trim());
 
-		if(param.get("secret") == null) {
+		if(param.get("secret").getFirst() == null) {
 			log.error("Failed to find secret for module {}", moduleName);
 			throw new CaptchaException(ErrorConstants.CAPTCHA_VALIDATION_FAILED);
 		}
@@ -65,7 +66,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 		try {
 			log.info("validate the token request via {}", captchaVerifyUrl);
 			captchaResponse = this.restTemplate.postForObject(captchaVerifyUrl, param, GoogleReCaptchaV2Response.class);
-			log.debug(" captchaResponse -> {}", captchaResponse);
+			log.info(" captchaResponse -> {}", captchaResponse);
 		} catch (RestClientException ex) {
 			log.error("captcha token validation request failed", ex);
 		}
