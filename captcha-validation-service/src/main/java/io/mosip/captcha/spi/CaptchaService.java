@@ -9,5 +9,4 @@ public interface CaptchaService{
 
 	ResponseWrapper<CaptchaResponseDTO> validateCaptcha(CaptchaRequestDTO captchaRequest) throws CaptchaException;
 
-
 }
