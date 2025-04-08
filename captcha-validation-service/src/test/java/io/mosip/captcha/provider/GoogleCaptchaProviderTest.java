@@ -2,9 +2,9 @@ package io.mosip.captcha.provider;
 
 import io.mosip.captcha.dto.CaptchaRequestDTO;
 import io.mosip.captcha.dto.CaptchaResponseDTO;
+import io.mosip.captcha.dto.GoogleReCaptchaV2Response;
 import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.CaptchaException;
-import io.mosip.captcha.provider.GoogleCaptchaProvider.GoogleReCaptchaV2Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

@@ -1,12 +1,11 @@
 package io.mosip.captcha.provider;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.mosip.captcha.dto.CaptchaResponseDTO;
+import io.mosip.captcha.dto.GoogleReCaptchaV2Response;
 import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.CaptchaException;
 import io.mosip.captcha.spi.CaptchaProvider;
 import io.mosip.captcha.util.ErrorConstants;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +18,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -43,28 +39,6 @@ public class GoogleCaptchaProvider implements CaptchaProvider {
     private RestTemplate restTemplate;
 
     private final String CAPTCHA_SUCCESS = "Captcha successfully verified";
-
-    @Data
-    public static class GoogleReCaptchaV2Response implements Serializable {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1L;
-
-        @JsonProperty("success")
-        private boolean success;
-
-        @JsonProperty("challenge_ts")
-        private String challengeTs;
-
-        @JsonProperty("hostname")
-        private String hostname;
-
-        @JsonProperty("error-codes")
-        private List<String> errorCodes;
-
-    }
 
     public String getProviderName() {
         return "GoogleRecaptchaV2";
