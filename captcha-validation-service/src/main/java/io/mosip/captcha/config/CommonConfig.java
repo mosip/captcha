@@ -1,7 +1,5 @@
 package io.mosip.captcha.config;
 
-import io.mosip.captcha.provider.GoogleCaptchaProvider;
-import io.mosip.captcha.spi.CaptchaProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +18,4 @@ public class CommonConfig {
 		return new RestTemplate();
 	}
 
-	@Bean
-	public CaptchaProvider captchaProvider() {
-//        if("abc-captcha-provider".equals(captchaProviderName)) {
-//            return new ABCCaptchaProvider();
-//        }
-		return new GoogleCaptchaProvider();   // default captcha provider
-	}
 }

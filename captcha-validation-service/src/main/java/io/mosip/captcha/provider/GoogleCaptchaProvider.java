@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -23,6 +24,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+@Component
 @ConfigurationProperties(prefix = "mosip.captcha")
 @Slf4j
 public class GoogleCaptchaProvider implements CaptchaProvider {
@@ -64,6 +66,9 @@ public class GoogleCaptchaProvider implements CaptchaProvider {
 
     }
 
+    public String getProviderName() {
+        return "GoogleRecaptchaV2";
+    }
 
     @Override
     public ResponseWrapper<CaptchaResponseDTO> verifyCaptcha(String moduleName, String captchaToken) throws CaptchaException {

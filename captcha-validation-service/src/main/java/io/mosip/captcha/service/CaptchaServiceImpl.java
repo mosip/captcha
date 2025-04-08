@@ -2,6 +2,7 @@ package io.mosip.captcha.service;
 
 import io.mosip.captcha.exception.CaptchaException;
 import io.mosip.captcha.spi.CaptchaProvider;
+import io.mosip.captcha.util.CaptchaProviderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,11 @@ public class CaptchaServiceImpl implements CaptchaService {
 	private String captchaApiVersion;
 
 	@Autowired
-	private CaptchaProvider captchaProvider;
+	private CaptchaProviderFactory captchaProviderFactory;
 
 	@Override
 	public ResponseWrapper<CaptchaResponseDTO> validateCaptcha(CaptchaRequestDTO captchaRequest) throws CaptchaException {
+		CaptchaProvider captchaProvider = captchaProviderFactory.getCaptchaProvider(captchaRequest.getModuleName());
 		ResponseWrapper<CaptchaResponseDTO> responseWrapper = captchaProvider.verifyCaptcha(captchaRequest.getModuleName(), captchaRequest.getCaptchaToken().trim());
 		responseWrapper.setId(captchaApiId);
 		responseWrapper.setVersion(captchaApiVersion);

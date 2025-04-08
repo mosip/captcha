@@ -7,6 +7,7 @@ import io.mosip.captcha.dto.CaptchaResponseDTO;
 import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.CaptchaException;
 import io.mosip.captcha.spi.CaptchaProvider;
+import io.mosip.captcha.util.CaptchaProviderFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,12 +24,16 @@ public class CaptchaServiceImplTest {
 	private CaptchaServiceImpl captchaServiceImpl;
 
 	@Mock
+	private CaptchaProviderFactory captchaProviderFactory;
+
+	@Mock
 	private CaptchaProvider captchaProvider;
 
 	@Before
 	public void setUp() {
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiId", "123");
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiVersion", "2.0");
+		Mockito.when(captchaProviderFactory.getCaptchaProvider(Mockito.any(String.class))).thenReturn(captchaProvider);
 	}
 
 	@Test

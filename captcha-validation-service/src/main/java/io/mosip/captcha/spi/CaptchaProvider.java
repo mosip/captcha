@@ -5,5 +5,9 @@ import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.CaptchaException;
 
 public interface CaptchaProvider {
+
+    String getProviderName();
+
     ResponseWrapper<CaptchaResponseDTO> verifyCaptcha(String moduleName, String captchaToken) throws CaptchaException;
+
 }
