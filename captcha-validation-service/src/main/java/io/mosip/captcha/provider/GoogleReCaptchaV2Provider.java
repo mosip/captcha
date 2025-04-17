@@ -26,7 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties(prefix = "mosip.captcha.google-recaptcha-v2")
+@ConfigurationProperties(prefix = "mosip.captcha.googlerecaptchav2")
 @Slf4j
 public class GoogleReCaptchaV2Provider implements CaptchaProvider {
 

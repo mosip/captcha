@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties(prefix = "mosip.captcha")
+@ConfigurationProperties(prefix = "mosip.captcha.module.provider")
 public class CaptchaProviderFactory {
 
     @Autowired
@@ -24,10 +24,10 @@ public class CaptchaProviderFactory {
 
     @Getter
     @Setter
-    private Map<String, String> moduleProviderMapping;
+    private Map<String, String> mapping;
 
     public CaptchaProvider getCaptchaProvider(String moduleName) {
-        String providerName = moduleProviderMapping.getOrDefault(moduleName, moduleProviderMapping.get("default"));
+        String providerName = mapping.getOrDefault(moduleName, mapping.get("default"));
         return providers.stream()
                 .filter(provider -> provider.getProviderName().equalsIgnoreCase(providerName))
                 .findFirst().orElseThrow();
