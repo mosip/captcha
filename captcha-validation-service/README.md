@@ -2,21 +2,27 @@
 
 This service is used to validate the Captcha in the Login flow.
 
+It supports factory pattern implementation of captcha providers. Any CaptchaProvider interface implementation can be added to the classpath and utilised.
+
+
+
 # Supported captcha validators
 
 - Google Recaptcha
 
 # Configurations
 
-1. Google Recaptcha
+Below is the config key name format to provide secret key for any module for each captcha provider.
 
-Below is the config key name format to provide secret key for any modules.
+`mosip.captcha.<provider>.secret.<modulename>=secret-key-generated-for-the-module`
 
-`mosip.captcha.secret.<modulename>=secret-key-generated-for-the-module`
+NOTE: Provider and Module name shouldn't contain any `-` or `_` .
 
-NOTE: Module name shouldn't contain any `-` or `_` .
+Captcha verify for each provider can be defined as follows.
+`mosip.captcha.<provider>.verify-url=captcha-verify-url`
 
-Eg: mosip.captcha.secret.preregistration=secret-key-generated-for-the-preregistration-module
+Captcha provider for each module can be configured as below.
+`mosip.captcha.module.provider.mapping.<modulename>=ABCCatchaProvider`
 
 
 # Example
