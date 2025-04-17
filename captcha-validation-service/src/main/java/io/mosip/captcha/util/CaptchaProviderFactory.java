@@ -19,10 +19,10 @@ public class CaptchaProviderFactory {
 
     @Getter
     @Setter
-    private Map<String, String> provider;
+    private Map<String, String> moduleProviderMapping;
 
     public CaptchaProvider getCaptchaProvider(String moduleName) {
-        String providerName = provider.getOrDefault(moduleName, provider.get("default"));
+        String providerName = moduleProviderMapping.getOrDefault(moduleName, moduleProviderMapping.get("default"));
         return providers.stream()
                 .filter(provider -> provider.getProviderName().equalsIgnoreCase(providerName))
                 .findFirst().orElseThrow();

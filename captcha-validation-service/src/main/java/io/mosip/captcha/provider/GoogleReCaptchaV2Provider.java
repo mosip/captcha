@@ -21,19 +21,17 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties(prefix = "mosip.captcha")
+@ConfigurationProperties(prefix = "mosip.captcha.google-recaptcha-v2")
 @Slf4j
-public class GoogleCaptchaProvider implements CaptchaProvider {
+public class GoogleReCaptchaV2Provider implements CaptchaProvider {
 
     @Getter
     @Setter
     private Map<String, String> secret;
 
-    @Value("${mosip.captcha.verify-url}")
-    private String captchaVerifyUrl;
-
-    @Value("${mosip.captcha.default.module-name:preregistration}")
-    private String defaultModuleName;
+    @Getter
+    @Setter
+    private String verifyUrl;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -41,14 +39,14 @@ public class GoogleCaptchaProvider implements CaptchaProvider {
     private final String CAPTCHA_SUCCESS = "Captcha successfully verified";
 
     public String getProviderName() {
-        return "GoogleRecaptchaV2";
+        return "GoogleReCaptchaV2";
     }
 
     @Override
-    public ResponseWrapper<CaptchaResponseDTO> verifyCaptcha(String moduleName, String captchaToken) throws CaptchaException {
+    public CaptchaResponseDTO verifyCaptcha(String moduleName, String captchaToken) throws CaptchaException {
 
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-        String captchaSecret = secret.get(moduleName == null ? defaultModuleName : moduleName);
+        String captchaSecret = secret.get(moduleName);
         if(captchaSecret == null) {
             log.error("Failed to find secret for module {}", moduleName);
             throw new CaptchaException(ErrorConstants.CAPTCHA_VALIDATION_FAILED);
@@ -57,11 +55,11 @@ public class GoogleCaptchaProvider implements CaptchaProvider {
         param.add("secret", captchaSecret);
         param.add("response", captchaToken);
 
-        log.info("validate the token request via {}", captchaVerifyUrl);
+        log.info("validate the token request via {}", verifyUrl);
 
         GoogleReCaptchaV2Response captchaResponse = null;
         try {
-            captchaResponse = this.restTemplate.postForObject(captchaVerifyUrl, param, GoogleReCaptchaV2Response.class);
+            captchaResponse = this.restTemplate.postForObject(verifyUrl, param, GoogleReCaptchaV2Response.class);
             log.info(" captchaResponse -> {}", captchaResponse);
         } catch (RestClientException ex) {
             log.error("captcha token validation request failed", ex);
@@ -74,13 +72,10 @@ public class GoogleCaptchaProvider implements CaptchaProvider {
             throw new CaptchaException(captchaResponse.getErrorCodes().get(0), captchaResponse.getErrorCodes().get(0));
 
         if(captchaResponse.isSuccess()) {
-            ResponseWrapper<CaptchaResponseDTO> responseWrapper = new ResponseWrapper<>();
-            responseWrapper.setResponsetime(captchaResponse.getChallengeTs());
             CaptchaResponseDTO response = new CaptchaResponseDTO();
             response.setMessage(CAPTCHA_SUCCESS);
             response.setSuccess(captchaResponse.isSuccess());
-            responseWrapper.setResponse(response);
-            return responseWrapper;
+            return response;
         }
 
         //request is NOT success and error-codes is empty

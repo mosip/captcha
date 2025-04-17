@@ -42,12 +42,10 @@ public class CaptchaServiceImplTest {
 		captchaRequest.setModuleName("module");
 		captchaRequest.setCaptchaToken("captcha_token");
 
-		ResponseWrapper<CaptchaResponseDTO> mockResponseWrapper = new ResponseWrapper<>();
 		CaptchaResponseDTO response = new CaptchaResponseDTO();
 		response.setSuccess(true);
-		mockResponseWrapper.setResponse(response);
 
-		Mockito.when(captchaProvider.verifyCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(mockResponseWrapper);
+		Mockito.when(captchaProvider.verifyCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(response);
 		ResponseWrapper<CaptchaResponseDTO> responseWrapper = captchaServiceImpl.validateCaptcha(captchaRequest);
 		assertNotNull(responseWrapper);
 		assertNotNull(responseWrapper.getResponse());

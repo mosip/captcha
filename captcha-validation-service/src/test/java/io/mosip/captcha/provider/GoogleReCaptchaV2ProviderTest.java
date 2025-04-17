@@ -3,7 +3,6 @@ package io.mosip.captcha.provider;
 import io.mosip.captcha.dto.CaptchaRequestDTO;
 import io.mosip.captcha.dto.CaptchaResponseDTO;
 import io.mosip.captcha.dto.GoogleReCaptchaV2Response;
-import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.CaptchaException;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,19 +21,18 @@ import java.util.List;
 import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GoogleCaptchaProviderTest {
+public class GoogleReCaptchaV2ProviderTest {
 
     @InjectMocks
-    private GoogleCaptchaProvider googleCaptchaProvider;
+    private GoogleReCaptchaV2Provider googleReCaptchaV2Provider;
 
     @Mock
     private RestTemplate restTemplate;
 
     @Before
     public void setup() {
-        ReflectionTestUtils.setField(googleCaptchaProvider, "secret", Map.ofEntries(Map.entry("preregistration", "preregsecret")));
-        ReflectionTestUtils.setField(googleCaptchaProvider, "captchaVerifyUrl", "https://www.google.com/recaptcha/api/siteverify");
-        ReflectionTestUtils.setField(googleCaptchaProvider, "defaultModuleName", "preregistration");
+        ReflectionTestUtils.setField(googleReCaptchaV2Provider, "secret", Map.ofEntries(Map.entry("preregistration", "preregsecret")));
+        ReflectionTestUtils.setField(googleReCaptchaV2Provider, "verifyUrl", "https://www.google.com/recaptcha/api/siteverify");
     }
 
     @Test
@@ -45,17 +43,16 @@ public class GoogleCaptchaProviderTest {
 		googleReCaptchaV2Response.setChallengeTs("Success");
 
 		Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any())).thenReturn(googleReCaptchaV2Response);
-        ResponseWrapper<CaptchaResponseDTO> responseWrapper = googleCaptchaProvider.verifyCaptcha("preregistration", "captcha_token");
-        Assertions.assertNotNull(responseWrapper);
-        Assertions.assertNotNull(responseWrapper.getResponse());
-        Assertions.assertTrue(responseWrapper.getResponse().isSuccess());
+        CaptchaResponseDTO response = googleReCaptchaV2Provider.verifyCaptcha("preregistration", "captcha_token");
+        Assertions.assertNotNull(response);
+        Assertions.assertTrue(response.isSuccess());
     }
 
     @Test
     public void verifyCaptcha_withInvalidModuleName_thenException() {
-        ReflectionTestUtils.setField(googleCaptchaProvider, "secret", Collections.emptyMap());
+        ReflectionTestUtils.setField(googleReCaptchaV2Provider, "secret", Collections.emptyMap());
         Assertions.assertThrows(CaptchaException.class, () -> {
-            googleCaptchaProvider.verifyCaptcha("invalid", "captcha_token");
+            googleReCaptchaV2Provider.verifyCaptcha("invalid", "captcha_token");
         });
     }
 
@@ -65,7 +62,7 @@ public class GoogleCaptchaProviderTest {
         captchaRequest.setCaptchaToken("captcha_token");
         Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any())).thenThrow(new RestClientException("captcha token validation request failed"));
         Assertions.assertThrows(CaptchaException.class, () -> {
-            googleCaptchaProvider.verifyCaptcha("preregistration", "captcha_token");
+            googleReCaptchaV2Provider.verifyCaptcha("preregistration", "captcha_token");
         });
     }
 
@@ -75,7 +72,7 @@ public class GoogleCaptchaProviderTest {
 		captchaResponse.setErrorCodes(List.of("Invalid token"));
 		Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any())).thenReturn(captchaResponse);
         Assertions.assertThrows(CaptchaException.class, () -> {
-            googleCaptchaProvider.verifyCaptcha("preregistration", "invalid_captcha_token");
+            googleReCaptchaV2Provider.verifyCaptcha("preregistration", "invalid_captcha_token");
         });
     }
 }
