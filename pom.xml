@@ -14,7 +14,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.mosip.captcha</groupId>
     <artifactId>captcha-parent</artifactId>
-    <version>0.1.0-beta.1</version>
+    <version>0.1.0-RC</version>
     <packaging>pom</packaging>
     <name>captcha</name>
     <description>Parent project of MOSIP captcha service</description>
