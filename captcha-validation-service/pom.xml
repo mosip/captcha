@@ -6,14 +6,14 @@
     <parent>
         <groupId>io.mosip.captcha</groupId>
         <artifactId>captcha-parent</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0-RC</version>
     </parent>
 	<groupId>io.mosip.captcha</groupId>
 	<artifactId>captcha-validation-service</artifactId>
 
 	<name>captcha-validation-service</name>
 	<description>A service to generate and validate captcha</description>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.0-RC</version>
 
 	<properties>
 		<java.version>21</java.version>
@@ -32,7 +32,7 @@
 			<dependency>
 				<groupId>io.mosip.kernel</groupId>
 				<artifactId>kernel-bom</artifactId>
-				<version>1.3.0-SNAPSHOT</version>
+				<version>1.3.0-RC</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -171,7 +171,7 @@
 				<dependency>
 					<groupId>io.mosip.kernel</groupId>
 					<artifactId>kernel-ref-idobjectvalidator</artifactId>
-					<version>1.3.0-SNAPSHOT</version>
+					<version>1.3.0-RC</version>
 				</dependency>
 				<dependency>
 					<groupId>io.mosip.kernel</groupId>
@@ -275,6 +275,31 @@
 							<outputFileName>${artifactId}-openapi.json</outputFileName>
 							<outputDir>${project.build.directory}</outputDir>
 							<skip>false</skip>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>pl.project13.maven</groupId>
+						<artifactId>git-commit-id-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<id>get-the-git-infos</id>
+								<goals>
+									<goal>revision</goal>
+								</goals>
+								<phase>validate</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<generateGitPropertiesFile>true</generateGitPropertiesFile>
+							<generateGitPropertiesFilename>${project.build.outputDirectory}/service-git.properties</generateGitPropertiesFilename>
+							<includeOnlyProperties>
+								<includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+								<includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+							</includeOnlyProperties>
+							<commitIdGenerationMode>full</commitIdGenerationMode>
+							<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+							<format>json</format>
 						</configuration>
 					</plugin>
 				</plugins>
