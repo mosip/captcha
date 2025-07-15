@@ -1,3 +1,6 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=mosip_captcha&metric=alert_status)](https://sonarcloud.io/dashboard?branch=develop&id=mosip_captcha)
+
+
 # captcha
 A single place to have all captcha needs across your service. 
 
