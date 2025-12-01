@@ -1,0 +1,47 @@
+MOSIP
+Copyright (c) 2022
+Modular Open Source Identity Platform
+
+This product includes software developed at
+The Apache Software Foundation (https://www.apache.org/).
+
+The following third-party components require attribution under the
+Apache License 2.0. Their original NOTICE information and copyrights
+are retained as required by the license.
+
+
+===============================================================================
+Apache License 2.0 Components
+===============================================================================
+
+ • Apache Maven Surefire Plugin
+ • Git Commit ID Maven Plugin
+ • Nexus Staging Maven Plugin
+ • Apache Maven Compiler Plugin
+ • Apache Maven Javadoc Plugin
+ • Apache Maven Source Plugin
+ • Apache Maven GPG Plugin
+ • Apache Maven WAR Plugin
+ • SpringDoc OpenAPI Maven Plugin
+ • Spring Boot Maven Plugin
+ • Apache Maven JAR Plugin
+ • Micrometer Core (io.micrometer:micrometer-core)
+ • Spring Boot Dependencies BOM
+ • Spring Cloud Starter Config
+ • Spring Boot Starter Test
+ • Spring Boot DevTools
+ • Spring Boot Starter Web
+ • Micrometer Prometheus Registry
+
+
+===============================================================================
+Notes
+===============================================================================
+
+All Mozilla Public License 2.0, EPL, MIT, and other permissive-licensed
+components used in this project do not require inclusion in this NOTICE
+file. Their respective license texts are provided in the LICENSE directory.
+
+Full license texts for all components are available in the `license/`
+directory or from the original project sources.
+
