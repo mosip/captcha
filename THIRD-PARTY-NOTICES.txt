@@ -82,14 +82,14 @@ Homepage: https://maven.apache.org/plugins/maven-jar-plugin/
 ================================================================================
 Package: io.micrometer:micrometer-core
 Version: Not specified
-License: Apache License 2.0 (Inferred from project’s official repository)
+License: Apache License 2.0 
 Homepage: https://micrometer.io
 ================================================================================
 
 ================================================================================
 Package: Spring Boot Dependencies BOM
 Version: Not specified
-License: Apache License 2.0 (Inferred)
+License: Apache License 2.0 
 Homepage: https://spring.io/projects/spring-boot
 ================================================================================
 
@@ -103,21 +103,21 @@ Homepage: https://junit.org/junit5/
 ================================================================================
 Package: MOSIP Kernel – ID Object Validator
 Version: 1.3.0-SNAPSHOT
-License: Mozilla Public License 2.0 (Inferred)
+License: Mozilla Public License 2.0
 Homepage: https://mosip.io
 ================================================================================
 
 ================================================================================
 Package: Spring Cloud Starter Config
 Version: Not specified
-License: Apache License 2.0 (Inferred)
+License: Apache License 2.0 
 Homepage: https://spring.io/projects/spring-cloud-config
 ================================================================================
 
 ================================================================================
 Package: Project Lombok
 Version: Not specified
-License: MIT License (Inferred)
+License: MIT License
 Homepage: https://projectlombok.org
 ================================================================================
 
@@ -129,7 +129,7 @@ Homepage: https://spring.io/projects/spring-boot
 ================================================================================
 
 ================================================================================
-Package: MOSIP Kernel – Logger (Logback)
+Package: MOSIP Kernel – Logger 
 Version: 1.3.0-beta.1
 License: Mozilla Public License 2.0
 Homepage: https://mosip.io
@@ -157,7 +157,7 @@ Homepage: https://mosip.io
 ================================================================================
 
 ================================================================================
-Package: MOSIP Kernel – Transliteration (ICU4J)
+Package: MOSIP Kernel – Transliteration 
 Version: 1.3.0-beta.1
 License: Mozilla Public License 2.0
 Homepage: https://mosip.io
@@ -173,12 +173,12 @@ Homepage: https://mosip.io
 ================================================================================
 Package: Micrometer Prometheus Registry
 Version: Not specified
-License: Apache License 2.0 (Inferred)
+License: Apache License 2.0
 Homepage: https://micrometer.io
 ================================================================================
 
 ================================================================================
-Package: MOSIP Captcha (Main Module)
+Package: MOSIP Captcha 
 Version: master
 License: Mozilla Public License 2.0
 Homepage: https://github.com/mosip/captcha
