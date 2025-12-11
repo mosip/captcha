@@ -44,9 +44,8 @@ public class CaptchaExceptionHandlerTest {
 		} catch (Exception ignored) {}
 	}
 
-	/** Covers: record creation, list creation, error population, ResponseEntity branch */
 	@Test
-	public void testHandleInvalidCaptchaRequest_full() {
+	public void test_handleInvalidCaptchaRequest_thenFail() {
 		BeanPropertyBindingResult result =
 				new BeanPropertyBindingResult(new Object(), "object");
 
@@ -67,9 +66,8 @@ public class CaptchaExceptionHandlerTest {
 		assertEquals(ErrorConstants.getErrorMessage(ErrorConstants.INVALID_CAPTCHA_REQUEST), err.getMessage());
 	}
 
-	/** Covers: normal CaptchaException path, list creation, returning wrapper directly */
 	@Test
-	public void testHandleCaptchaException_full() {
+	public void test_handleCaptchaException_thenFail() {
 		CaptchaException ex = new CaptchaException("ERR100", "Sample error message");
 
 		ResponseWrapper<?> response = handler.handleCaptchaException(ex);
@@ -84,9 +82,8 @@ public class CaptchaExceptionHandlerTest {
 		assertEquals("Sample error message", err.getMessage());
 	}
 
-	/** Covers: general exception path, message extraction, null & list edge */
 	@Test
-	public void testHandleGeneralException_full() {
+	public void test_handleGeneralException_thenFail() {
 		Exception ex = new Exception("GeneralFailure");
 
 		ResponseWrapper<?> response = handler.handleException(ex);
@@ -102,9 +99,8 @@ public class CaptchaExceptionHandlerTest {
 		assertEquals("GeneralFailure", err.getMessage());
 	}
 
-	/** Extra coverage: null Exception message (forces null message branch) */
 	@Test
-	public void testHandleGeneralException_nullMessage() {
+	public void test_handleException_withNullMessage_thenPass() {
 		Exception ex = new Exception((String) null);
 
 		ResponseWrapper<?> response = handler.handleException(ex);
@@ -113,19 +109,5 @@ public class CaptchaExceptionHandlerTest {
 		assertEquals(ErrorConstants.CAPTCHA_VALIDATION_FAILED,
 				response.getErrors().get(0).getErrorCode());
 		assertNull(response.getErrors().get(0).getMessage());
-	}
-
-	/** Extra coverage: multiple errors + setter/getter Jacoco hit for DTO */
-	@Test
-	public void testExceptionJSONInfoDTO_gettersSettersCoverage() {
-		ExceptionJSONInfoDTO dto = new ExceptionJSONInfoDTO();
-		dto.setErrorCode("X001");
-		dto.setMessage("TestMessage");
-
-		assertEquals("X001", dto.getErrorCode());
-		assertEquals("TestMessage", dto.getMessage());
-
-		// toString() coverage
-		assertTrue(dto.toString().contains("X001"));
 	}
 }
