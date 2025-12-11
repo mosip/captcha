@@ -45,7 +45,7 @@ public class CaptchaExceptionHandlerTest {
 	}
 
 	@Test
-	public void test_handleInvalidCaptchaRequest_thenFail() {
+	public void handleException_WithInvalidCaptchaRequest_thenPass() {
 		BeanPropertyBindingResult result =
 				new BeanPropertyBindingResult(new Object(), "object");
 
@@ -67,7 +67,7 @@ public class CaptchaExceptionHandlerTest {
 	}
 
 	@Test
-	public void test_handleCaptchaException_thenFail() {
+	public void handleCaptchaException_whenCaptchaExceptionThrown_thenPass() {
 		CaptchaException ex = new CaptchaException("ERR100", "Sample error message");
 
 		ResponseWrapper<?> response = handler.handleCaptchaException(ex);
@@ -83,7 +83,7 @@ public class CaptchaExceptionHandlerTest {
 	}
 
 	@Test
-	public void test_handleGeneralException_thenFail() {
+	public void handleException_whenGeneralExceptionThrown_thenPass() {
 		Exception ex = new Exception("GeneralFailure");
 
 		ResponseWrapper<?> response = handler.handleException(ex);
@@ -100,7 +100,7 @@ public class CaptchaExceptionHandlerTest {
 	}
 
 	@Test
-	public void test_handleException_withNullMessage_thenPass() {
+	public void handleException_withNullMessage_thenPass() {
 		Exception ex = new Exception((String) null);
 
 		ResponseWrapper<?> response = handler.handleException(ex);
