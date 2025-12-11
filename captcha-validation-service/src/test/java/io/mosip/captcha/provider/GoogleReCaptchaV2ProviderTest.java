@@ -80,4 +80,28 @@ public class GoogleReCaptchaV2ProviderTest {
             googleReCaptchaV2Provider.verifyCaptcha("preregistration", "invalid_captcha_token");
         });
     }
+
+    @Test
+    public void verifyCaptcha_withUnsuccessfulWithoutErrors_thenException() {
+        GoogleReCaptchaV2Response captchaResponse = new GoogleReCaptchaV2Response();
+        captchaResponse.setSuccess(false);
+        captchaResponse.setErrorCodes(null);  // No error codes
+
+        Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any()))
+                .thenReturn(captchaResponse);
+
+        Assertions.assertThrows(CaptchaException.class, () -> {
+            googleReCaptchaV2Provider.verifyCaptcha("preregistration", "captcha_token");
+        });
+    }
+
+    @Test
+    public void verifyCaptcha_withNullCaptchaResponse_thenException() {
+        Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any()))
+                .thenReturn(null); // Simulate null Google response
+
+        Assertions.assertThrows(CaptchaException.class, () -> {
+            googleReCaptchaV2Provider.verifyCaptcha("preregistration", "captcha_token");
+        });
+    }
 }
