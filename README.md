@@ -1,34 +1,88 @@
-# captcha
-A single place to have all captcha needs across your service. 
+# MOSIP Captcha Services
 
-## Build & run (for developers)
-The project requires JDK 21.0.3
-and mvn version - 3.9.6
-1. Build and install:
-    ```
-     $ mvn install -Dgpg.skip=true
-    ```
-2.  Build Docker for a service:
-    ```
-    $ cd <service folder>
-    $ docker build -f Dockerfile
-    ```
-3. Configure module wise secrets in the [application-default.properties](captcha-validation-service/src/main/resources/application-default.properties)
-4. Run [CaptchaServiceApplication.java](captcha-validation-service/src/main/java/io/mosip/captcha/CaptchaServiceApplication.java) from IDE.
-5. Service should be accessible at http://localhost:9089/v1/captcha
+## Overview
 
-## Configuration
-Captcha Validation Service uses the following configuration files that are accessible in this [repository](https://github.com/mosip/mosip-config/tree/master).
-Please refer to the required released tagged version for configuration.
-1. [Configuration-Captcha](https://github.com/mosip/mosip-config/blob/master/captcha-default.properties)
+The **Captcha Services** module provides functionality to validate Captchas, primarily used in flow such as Login.
 
-## Deploy
-To deploy captcha-service on Kubernetes cluster using Dockers refer to [Sandbox Deployment](https://docs.mosip.io/1.2.0/deploymentnew/v3-installation).
+It supports a factory pattern implementation of captcha providers, allowing any `CaptchaProvider` interface implementation to be added to the classpath and utilized.
 
-## APIs
-API documentation is available [here](https://mosip.github.io/documentation/1.2.0/1.2.0.html).
+## Services
+
+The Captcha module contains the following:
+
+1. **[Captcha Validation Service](captcha-validation-service/README.md)** - Service for validating captchas.
+
+## Local Setup
+
+The project can be set up in two ways:
+
+1. [Local Setup (for Development or Contribution)](#local-setup-for-development-or-contribution)
+2. [Local Setup with Docker (Easy Setup for Demos)](#local-setup-with-docker-easy-setup-for-demos)
+
+### Prerequisites
+
+- **JDK**: 21.0.3
+- **Maven**: 3.9.6
+- **Docker**: Latest stable version
+
+### Configuration
+
+- Check the captcha properties: [mosip-config](https://github.com/mosip/mosip-config/tree/master).
+
+## Installation
+
+### Local Setup (for Development or Contribution)
+
+1. Clone the repository:
+
+```text
+git clone <repo-url>
+cd captcha
+```
+
+2. Build the project:
+
+```text
+mvn clean install -Dgpg.skip=true
+```
+
+3. Start the application:
+    - Run `CaptchaServiceApplication.java` from your IDE.
+    - Or run the jar from the target directory:
+      ```text
+      java -jar captcha-validation-service/target/captcha-validation-service-*.jar
+      ```
+
+4. Verify the service is accessible at: `http://localhost:9089/v1/captcha`
+
+### Local Setup with Docker (Easy Setup for Demos)
+
+1. Build Docker image:
+
+```text
+cd captcha-validation-service
+docker build -f Dockerfile .
+```
+
+2. Run the service using Docker. Ensure you have configured the module-wise secrets in `application-default.properties` or passed them as environment variables.
+
+## Deployment
+
+### Kubernetes
+
+To deploy captcha-service on a Kubernetes cluster, refer to the [Sandbox Deployment Guide](https://docs.mosip.io/1.2.0/deploymentnew/v3-installation).
+
+## Documentation
+
+- **API Documentation**: Available [here](https://mosip.github.io/documentation/1.2.0/1.2.0.html).
+- **Service Documentation**: Refer to the [Captcha Validation Service README](captcha-validation-service/README.md) for more details.
+
+## Contribution & Community
+
+- To learn how you can contribute code to this application, [click here](https://docs.mosip.io/1.2.0/community/code-contributions).
+- If you have questions or encounter issues, visit the [MOSIP Community](https://community.mosip.io/) for support.
+- For any GitHub issues: [Report here](https://github.com/mosip/captcha/issues)
 
 ## License
-This project is licensed under the terms of [Mozilla Public License 2.0](LICENSE).
 
-**Note**: Refer [README.md](captcha-validation-service/README.md) for more details.
+This project is licensed under the [Mozilla Public License 2.0](LICENSE).
