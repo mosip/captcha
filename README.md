@@ -1,4 +1,5 @@
 # MOSIP Captcha Services
+[![Maven Package upon a push](https://github.com/mosip/captcha/actions/workflows/push-trigger.yml/badge.svg?branch=master)](https://github.com/mosip/captcha/actions/workflows/push-trigger.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=mosip_captcha&id=mosip_packet-manager2&metric=alert_status)](https://sonarcloud.io/summary/overall?id=mosip_captcha&branch=develop)
 
 ## Overview
 
