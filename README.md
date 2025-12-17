@@ -1,34 +1,22 @@
-# captcha
-A single place to have all captcha needs across your service. 
+# MOSIP Captcha Services
 
-## Build & run (for developers)
-The project requires JDK 21.0.3
-and mvn version - 3.9.6
-1. Build and install:
-    ```
-     $ mvn install -Dgpg.skip=true
-    ```
-2.  Build Docker for a service:
-    ```
-    $ cd <service folder>
-    $ docker build -f Dockerfile
-    ```
-3. Configure module wise secrets in the [application-default.properties](captcha-validation-service/src/main/resources/application-default.properties)
-4. Run [CaptchaServiceApplication.java](captcha-validation-service/src/main/java/io/mosip/captcha/CaptchaServiceApplication.java) from IDE.
-5. Service should be accessible at http://localhost:9089/v1/captcha
+[![Maven Package upon a push](https://github.com/mosip/captcha/actions/workflows/push-trigger.yml/badge.svg?branch=develop)](https://github.com/mosip/captcha/actions/workflows/push-trigger.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=mosip_captcha&id=mosip_packet-manager2&metric=alert_status)](https://sonarcloud.io/summary/overall?id=mosip_captcha&branch=develop)
 
-## Configuration
-Captcha Validation Service uses the following configuration files that are accessible in this [repository](https://github.com/mosip/mosip-config/tree/master).
-Please refer to the required released tagged version for configuration.
-1. [Configuration-Captcha](https://github.com/mosip/mosip-config/blob/master/captcha-default.properties)
+This repository provides services for generating and validating CAPTCHA challenges within the MOSIP platform. The Captcha module supports automated bot protection for APIs such as send-OTP and credential validation, ensuring secure user interactions.
 
-## Deploy
-To deploy captcha-service on Kubernetes cluster using Dockers refer to [Sandbox Deployment](https://docs.mosip.io/1.2.0/deploymentnew/v3-installation).
+## Overview
 
-## APIs
-API documentation is available [here](https://mosip.github.io/documentation/1.2.0/1.2.0.html).
+The Captcha project includes one primary service:
+- **captcha-validation-service** — handles captcha generation, validation APIs, and integration with MOSIP authentication flows.
+
+For full details on building, configuring, and using this service [check here.](captcha-validation-service/README.md)
+
+## Contribution & Community
+
+- To learn how you can contribute code to this application, [click here](https://docs.mosip.io/1.2.0/community/code-contributions).
+- If you have questions or encounter issues, visit the [MOSIP Community](https://community.mosip.io/) for support.
+- For any GitHub issues: [Report here](https://github.com/mosip/captcha/issues)
 
 ## License
-This project is licensed under the terms of [Mozilla Public License 2.0](LICENSE).
 
-**Note**: Refer [README.md](captcha-validation-service/README.md) for more details.
+This project is licensed under the [Mozilla Public License 2.0](LICENSE).
