@@ -1,0 +1,180 @@
+THIRD-PARTY-NOTICES
+
+This project includes third-party packages that are distributed under various open-source licenses. Below is a list of packages and their associated licenses.
+
+================================================================================
+Package: Apache Maven Surefire Plugin
+Version: 2.22.0
+License: Apache License 2.0
+Homepage: https://maven.apache.org/surefire/maven-surefire-plugin/
+================================================================================
+
+================================================================================
+Package: Nexus Staging Maven Plugin
+Version: 1.6.14
+License: Apache License 2.0
+Homepage: https://help.sonatype.com/repomanager2/staging-releases/releasing-components
+================================================================================
+
+================================================================================
+Package: Apache Maven Compiler Plugin
+Version: 3.8.1
+License: Apache License 2.0
+Homepage: https://maven.apache.org/plugins/maven-compiler-plugin/
+================================================================================
+
+================================================================================
+Package: Apache Maven Javadoc Plugin
+Version: 3.2.0
+License: Apache License 2.0
+Homepage: https://maven.apache.org/plugins/maven-javadoc-plugin/
+================================================================================
+
+================================================================================
+Package: Apache Maven Source Plugin
+Version: 2.2.1
+License: Apache License 2.0
+Homepage: https://maven.apache.org/plugins/maven-source-plugin/
+================================================================================
+
+================================================================================
+Package: Apache Maven GPG Plugin
+Version: 1.5
+License: Apache License 2.0
+Homepage: https://maven.apache.org/plugins/maven-gpg-plugin/
+================================================================================
+
+================================================================================
+Package: Apache Maven WAR Plugin
+Version: 3.1.0
+License: Apache License 2.0
+Homepage: https://maven.apache.org/plugins/maven-war-plugin/
+================================================================================
+
+================================================================================
+Package: SpringDoc OpenAPI Maven Plugin
+Version: 0.2
+License: Apache License 2.0
+Homepage: https://springdoc.org
+================================================================================
+
+================================================================================
+Package: Spring Boot Maven Plugin
+Version: 3.2.3
+License: Apache License 2.0
+Homepage: https://spring.io/projects/spring-boot
+================================================================================
+
+================================================================================
+Package: Apache Maven JAR Plugin
+Version: 3.0.2
+License: Apache License 2.0
+Homepage: https://maven.apache.org/plugins/maven-jar-plugin/
+================================================================================
+
+================================================================================
+Package: io.micrometer:micrometer-core
+Version: Not specified
+License: Apache License 2.0 
+Homepage: https://micrometer.io
+================================================================================
+
+================================================================================
+Package: Spring Boot Dependencies BOM
+Version: Not specified
+License: Apache License 2.0 
+Homepage: https://spring.io/projects/spring-boot
+================================================================================
+
+================================================================================
+Package: JUnit Jupiter API
+Version: 5.7.1
+License: EPL-2.0
+Homepage: https://junit.org/junit5/
+================================================================================
+
+================================================================================
+Package: MOSIP Kernel – ID Object Validator
+Version: 1.3.0-SNAPSHOT
+License: Mozilla Public License 2.0
+Homepage: https://mosip.io
+================================================================================
+
+================================================================================
+Package: Spring Cloud Starter Config
+Version: Not specified
+License: Apache License 2.0 
+Homepage: https://spring.io/projects/spring-cloud-config
+================================================================================
+
+================================================================================
+Package: Project Lombok
+Version: Not specified
+License: MIT License
+Homepage: https://projectlombok.org
+================================================================================
+
+================================================================================
+Package: Spring Boot Starter Test
+Version: Not specified
+License: Apache License 2.0
+Homepage: https://spring.io/projects/spring-boot
+================================================================================
+
+================================================================================
+Package: MOSIP Kernel – Logger 
+Version: 1.3.0-beta.1
+License: Mozilla Public License 2.0
+Homepage: https://mosip.io
+================================================================================
+
+================================================================================
+Package: Spring Boot DevTools
+Version: Not specified
+License: Apache License 2.0
+Homepage: https://spring.io/projects/spring-boot
+================================================================================
+
+================================================================================
+Package: Spring Boot Starter Web
+Version: Not specified
+License: Apache License 2.0
+Homepage: https://spring.io/projects/spring-boot
+================================================================================
+
+================================================================================
+Package: MOSIP Kernel BOM
+Version: 1.3.0-beta.1
+License: Mozilla Public License 2.0
+Homepage: https://mosip.io
+================================================================================
+
+================================================================================
+Package: MOSIP Kernel – Transliteration 
+Version: 1.3.0-beta.1
+License: Mozilla Public License 2.0
+Homepage: https://mosip.io
+================================================================================
+
+================================================================================
+Package: MOSIP Kernel Core
+Version: 1.3.0-beta.1
+License: Mozilla Public License 2.0
+Homepage: https://mosip.io
+================================================================================
+
+================================================================================
+Package: Micrometer Prometheus Registry
+Version: Not specified
+License: Apache License 2.0
+Homepage: https://micrometer.io
+================================================================================
+
+================================================================================
+Package: MOSIP Captcha 
+Version: master
+License: Mozilla Public License 2.0
+Homepage: https://github.com/mosip/captcha
+================================================================================
+
+Full license texts and additional details for each of the above packages are available in the license/ directory of this repository. Please refer to those files or the original source of each package for complete legal terms and conditions.
