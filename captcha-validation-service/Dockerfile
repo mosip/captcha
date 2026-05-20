@@ -71,4 +71,4 @@ USER ${container_user_uid}:${container_user_gid}
 
 EXPOSE 9089
 
-CMD java -jar -Dspring.cloud.config.label="${spring_config_label_env}" -Dspring.profiles.active=${active_profile_env} -Dspring.cloud.config.uri="${spring_config_url_env}" captcha-validation-service.jar
+CMD java -XX:-UseG1GC -XX:-UseParallelGC -XX:-UseShenandoahGC -XX:+ExplicitGCInvokesConcurrent -XX:+UseZGC -XX:+ZGenerational -XX:+UnlockExperimentalVMOptions -XX:+UseStringDeduplication -XX:+HeapDumpOnOutOfMemoryError -XX:+UseCompressedOops -XX:MaxGCPauseMillis=200 -Dfile.encoding=UTF-8 -Dspring.cloud.config.label="${spring_config_label_env}" -Dspring.profiles.active=${active_profile_env} -Dspring.cloud.config.uri="${spring_config_url_env}" -jar captcha-validation-service.jar

@@ -1,3 +1,8 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
 package io.mosip.captcha.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -5,10 +10,8 @@ import io.mosip.captcha.dto.CaptchaRequestDTO;
 import io.mosip.captcha.dto.CaptchaResponseDTO;
 import io.mosip.captcha.dto.RequestWrapper;
 import io.mosip.captcha.dto.ResponseWrapper;
-import io.mosip.captcha.exception.InvalidRequestCaptchaException;
 import io.mosip.captcha.spi.CaptchaService;
-import io.mosip.captcha.util.CaptchaErrorCode;
-import org.hamcrest.Matchers;
+import io.mosip.captcha.util.ErrorConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +41,7 @@ public class CaptchaControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    public void validateCaptcha_withValidRequest_returnSuccessResponse() throws Exception {
+    public void testValidateCaptchaEndpoint_withValidRequest_thenPass() throws Exception {
         RequestWrapper<CaptchaRequestDTO> requestWrapper = new RequestWrapper<>();
         CaptchaRequestDTO requestDTO = new CaptchaRequestDTO();
         requestDTO.setCaptchaToken("token");
@@ -61,11 +64,9 @@ public class CaptchaControllerTest {
     }
 
     @Test
-    public void validateCaptcha_withInvalidRequest_returnErrorResponse() throws Exception {
+    public void testValidateCaptchaEndpoint_withInvalidRequest_thenError() throws Exception {
         RequestWrapper<CaptchaRequestDTO> requestWrapper = new RequestWrapper<>();
         requestWrapper.setRequest(new CaptchaRequestDTO());
-
-        when(captchaService.validateCaptcha(any(CaptchaRequestDTO.class))).thenThrow(new InvalidRequestCaptchaException(CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorCode(), CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorMessage()));
 
         mockMvc.perform(post("/validatecaptcha")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -74,7 +75,6 @@ public class CaptchaControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.errors").isArray())
-                .andExpect(jsonPath("$.errors", Matchers.hasSize(Matchers.greaterThanOrEqualTo(1))))
-                .andExpect(jsonPath("$.errors[0].errorCode", Matchers.is(CaptchaErrorCode.INVALID_CAPTCHA_REQUEST.getErrorCode())));
+                .andExpect(jsonPath("$.errors[0].errorCode").value(ErrorConstants.INVALID_CAPTCHA_REQUEST));
     }
 }

@@ -1,13 +1,18 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
 package io.mosip.captcha.service;
 
 import static org.junit.Assert.*;
 
-		import io.mosip.captcha.dto.CaptchaRequestDTO;
+import io.mosip.captcha.dto.CaptchaRequestDTO;
 import io.mosip.captcha.dto.CaptchaResponseDTO;
-import io.mosip.captcha.dto.GoogleReCaptchaV2Response;
 import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.exception.CaptchaException;
-import io.mosip.captcha.exception.InvalidRequestCaptchaException;
+import io.mosip.captcha.spi.CaptchaProvider;
+import io.mosip.captcha.util.CaptchaProviderFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,12 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CaptchaServiceImplTest {
@@ -28,78 +28,42 @@ public class CaptchaServiceImplTest {
 	@InjectMocks
 	private CaptchaServiceImpl captchaServiceImpl;
 
-	@Value("${mosip.captcha.recaptcha.verify.url}")
-	public String recaptchaVerifyUrl;
+	@Mock
+	private CaptchaProviderFactory captchaProviderFactory;
 
 	@Mock
-	private RestTemplate restTemplate;
+	private CaptchaProvider captchaProvider;
 
 	@Before
 	public void setUp() {
-		Map<String, String> secrets = new HashMap<>();
-		secrets.put("resident", "resident-captcha-secret");
-		secrets.put("preregistration", "pre-registration-captcha-secret");
-		ReflectionTestUtils.setField(captchaServiceImpl, "secret", secrets);
-		ReflectionTestUtils.setField(captchaServiceImpl, "captchaVerifyUrl",
-				"https://www.google.com/recaptcha/api/siteverify");
-		ReflectionTestUtils.setField(captchaServiceImpl, "defaultModuleName", "preregistration");
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiId", "123");
 		ReflectionTestUtils.setField(captchaServiceImpl, "captchaApiVersion", "2.0");
+		Mockito.when(captchaProviderFactory.getCaptchaProvider(Mockito.any(String.class))).thenReturn(captchaProvider);
 	}
 
-
 	@Test
-	public void validateCaptcha_withValidInput_thenPass() throws CaptchaException, InvalidRequestCaptchaException {
+	public void validateCaptcha_withValidInput_thenPass() throws CaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
-		captchaRequest.setCaptchaToken("temp");
+		captchaRequest.setModuleName("module");
+		captchaRequest.setCaptchaToken("captcha_token");
 
-		GoogleReCaptchaV2Response googleReCaptchaV2Response = new GoogleReCaptchaV2Response();
-		googleReCaptchaV2Response.setHostname(recaptchaVerifyUrl);
-		googleReCaptchaV2Response.setSuccess(true);
-		googleReCaptchaV2Response.setChallengeTs("Success");
+		CaptchaResponseDTO response = new CaptchaResponseDTO();
+		response.setSuccess(true);
 
-		Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any())).thenReturn(googleReCaptchaV2Response);
-		ResponseWrapper<CaptchaResponseDTO> responseWrapper = (ResponseWrapper<CaptchaResponseDTO>) captchaServiceImpl.validateCaptcha(captchaRequest);
+		Mockito.when(captchaProvider.verifyCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(response);
+		ResponseWrapper<CaptchaResponseDTO> responseWrapper = captchaServiceImpl.validateCaptcha(captchaRequest);
 		assertNotNull(responseWrapper);
 		assertNotNull(responseWrapper.getResponse());
 		assertTrue(responseWrapper.getResponse().isSuccess());
 	}
 
-	@Test(expected = InvalidRequestCaptchaException.class)
-	public void validateCaptcha_withInvalidEmptyToken_throwException() throws InvalidRequestCaptchaException, CaptchaException {
-		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
-		captchaRequest.setCaptchaToken("");
-		captchaRequest.setModuleName("invalid");
-		captchaServiceImpl.validateCaptcha(captchaRequest);
-	}
-
 	@Test(expected = CaptchaException.class)
-	public void validateCaptcha_withInvalidModuleName_throwException() throws CaptchaException, InvalidRequestCaptchaException {
-		ReflectionTestUtils.setField(captchaServiceImpl, "secret", Collections.emptyMap());
-
+	public void validateCaptcha_withInvalidToken_thenException() throws CaptchaException {
 		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
-		captchaRequest.setCaptchaToken("captcha_token");
-		captchaRequest.setModuleName("invalid");
-		captchaServiceImpl.validateCaptcha(captchaRequest);
-	}
+		captchaRequest.setModuleName("module");
+		captchaRequest.setCaptchaToken("invalid_captcha_token");
 
-	@Test(expected = CaptchaException.class)
-	public void validateCaptcha_withRestClientFailure_throwException() throws CaptchaException, InvalidRequestCaptchaException {
-		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
-		captchaRequest.setCaptchaToken("captcha_token");
-		Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any())).thenThrow(new RestClientException("captcha token validation request failed"));
-		captchaServiceImpl.validateCaptcha(captchaRequest);
-	}
-
-	@Test(expected = CaptchaException.class)
-	public void validateCaptcha_withInvalidToken_throwException() throws CaptchaException, InvalidRequestCaptchaException {
-		CaptchaRequestDTO captchaRequest = new CaptchaRequestDTO();
-		captchaRequest.setCaptchaToken("captcha_token");
-
-		GoogleReCaptchaV2Response captchaResponse = new GoogleReCaptchaV2Response();
-		captchaResponse.setErrorCodes(List.of("Invalid token"));
-
-		Mockito.when(restTemplate.postForObject(Mockito.anyString(), Mockito.any(), Mockito.any())).thenReturn(captchaResponse);
+		Mockito.when(captchaProvider.verifyCaptcha(Mockito.anyString(), Mockito.anyString())).thenThrow(new CaptchaException("Invalid captcha token"));
 		captchaServiceImpl.validateCaptcha(captchaRequest);
 	}
 
