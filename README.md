@@ -1,6 +1,6 @@
 # MOSIP Captcha Services
 
-[![Maven Package upon a push](https://github.com/mosip/captcha/actions/workflows/push-trigger.yml/badge.svg?branch=develop)](https://github.com/mosip/captcha/actions/workflows/push-trigger.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=mosip_captcha&id=mosip_packet-manager2&metric=alert_status)](https://sonarcloud.io/summary/overall?id=mosip_captcha&branch=develop)
+[![Maven Package upon a push](https://github.com/mosip/captcha/actions/workflows/push-trigger.yml/badge.svg?branch=release-0.1.x&project=mosip_captcha&id=mosip_packet-manager2&metric=alert_status)](https://sonarcloud.io/summary/overall?id=mosip_captcha&branch=develop)
 
 This repository provides services for generating and validating CAPTCHA challenges within the MOSIP platform. The Captcha module supports automated bot protection for APIs such as send-OTP and credential validation, ensuring secure user interactions.
 
