@@ -2,7 +2,7 @@ apiVersion: v2
 name: captcha
 description: A Helm chart for MOSIP Captcha Service
 type: application
-version: 0.1.1
+version: o.1.1-develop
 appVersion: ""
 dependencies:
   - name: common
