@@ -7,7 +7,7 @@ if [ $# -ge 1 ] ; then
 fi
 
   NS=captcha
-  CHART_VERSION=0.1.0-beta.1-develop
+  CHART_VERSION=0.2.0-develop
 
   echo Create $NS namespace
   kubectl create ns $NS || true
@@ -18,6 +18,10 @@ function installing_captcha() {
 
   kubectl label ns $NS istio-injection=disabled --overwrite
   helm repo update
+
+  echo Copy configmaps
+  sed -i 's/\r$//' copy_cm.sh
+  ./copy_cm.sh
 
   while true; do
     read -p "Is Prometheus Service Monitor Operator deployed in the k8s cluster? (y/n): " response

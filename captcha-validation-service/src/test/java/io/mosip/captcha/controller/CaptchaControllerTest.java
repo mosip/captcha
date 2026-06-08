@@ -6,7 +6,10 @@
 package io.mosip.captcha.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.mosip.captcha.dto.*;
+import io.mosip.captcha.dto.CaptchaRequestDTO;
+import io.mosip.captcha.dto.CaptchaResponseDTO;
+import io.mosip.captcha.dto.RequestWrapper;
+import io.mosip.captcha.dto.ResponseWrapper;
 import io.mosip.captcha.spi.CaptchaService;
 import io.mosip.captcha.util.ErrorConstants;
 import org.junit.Test;
